@@ -22,7 +22,7 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 font-bold text-lg font-headline">
           <Droplet className="h-6 w-6 text-primary" />
-          Aarya Bathware
+          Aarya Hardware
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
           {navLinks.map((link) => (
@@ -47,7 +47,7 @@ export function Header() {
               <div className="p-4">
                 <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-8">
                   <Droplet className="h-6 w-6 text-primary" />
-                  Aarya Bathware
+                  Aarya Hardware
                 </Link>
                 <nav className="flex flex-col gap-4">
                   {navLinks.map((link) => (

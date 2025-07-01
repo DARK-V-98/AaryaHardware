@@ -63,7 +63,7 @@ export default function Home() {
               Elegance in Every Detail
             </h1>
             <p className="text-lg md:text-xl max-w-2xl mx-auto drop-shadow-md">
-              Discover our premium collection of bathware that combines modern design with timeless quality.
+              Discover our premium collection of hardware that combines modern design with timeless quality.
             </p>
             <Button size="lg" className="mt-8" asChild>
               <a href="#products">Shop Collection</a>
@@ -89,9 +89,9 @@ export default function Home() {
         <section id="about" className="py-16 md:py-24 bg-card">
           <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 font-headline">About Aarya Bathware</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 font-headline">About Aarya Hardware</h2>
               <p className="text-muted-foreground leading-relaxed">
-                Aarya Bathware is a premier destination for high-quality, design-forward bath fixtures and accessories. We believe that the bathroom is a sanctuary, a place of rejuvenation and tranquility. That's why we meticulously source and curate a collection of products that embody elegance, innovation, and durability. Our mission is to help you create a space that is not only functional but also a true reflection of your personal style.
+                Aarya Hardware is a premier destination for high-quality, design-forward hardware and accessories. We believe that every space should be both functional and beautiful. That's why we meticulously source and curate a collection of products that embody elegance, innovation, and durability. Our mission is to help you create a space that is not only functional but also a true reflection of your personal style.
               </p>
             </div>
              <div className="order-1 md:order-2">
@@ -120,7 +120,7 @@ export default function Home() {
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <MapPin className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                    <p className="text-muted-foreground">123 Bathware Avenue, Suite 100<br/>Aqua City, State 12345</p>
+                    <p className="text-muted-foreground">123 Hardware Avenue, Suite 100<br/>Aqua City, State 12345</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Phone className="h-5 w-5 text-primary flex-shrink-0" />

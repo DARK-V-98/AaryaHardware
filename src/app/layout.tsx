@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Aarya Bathware',
-  description: 'Premium bathware solutions for modern homes.',
+  title: 'Aarya Hardware',
+  description: 'Premium hardware solutions for modern homes.',
 };
 
 export default function RootLayout({
