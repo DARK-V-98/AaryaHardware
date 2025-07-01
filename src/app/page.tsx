@@ -51,7 +51,7 @@ export default function Home() {
         <section className="relative w-full h-[60vh] md:h-[70vh] flex items-center justify-center text-center text-white overflow-hidden">
           <div className="absolute inset-0 bg-black/50 z-10" />
           <Image
-            src="/arb.png"
+            src="/arb.jpg"
             alt="Beautiful bathroom scene"
             fill
             className="object-cover"
