@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, onSnapshot } from 'firebase/firestore';
 import { auth, firestore } from '@/lib/firebase';
 
 interface AuthContextType {
@@ -23,32 +23,57 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    let roleUnsubscribe: (() => void) | undefined;
+
+    const authUnsubscribe = onAuthStateChanged(auth, (user) => {
+      // If there's an existing role listener, unsubscribe from it before setting up a new one
+      if (roleUnsubscribe) {
+        roleUnsubscribe();
+      }
+
       if (user) {
-        const userDocRef = doc(firestore, 'users', user.uid);
-        const userDoc = await getDoc(userDocRef);
-        
-        if (userDoc.exists()) {
-          setRole(userDoc.data().role);
-        } else {
-          // If user doc doesn't exist, create it with a default 'customer' role
-          await setDoc(userDocRef, { email: user.email, role: 'customer' });
-          setRole('customer');
-        }
         setUser(user);
+        const userDocRef = doc(firestore, 'users', user.uid);
+        
+        // Listen for real-time updates to the user's role
+        roleUnsubscribe = onSnapshot(userDocRef, async (docSnap) => {
+          if (docSnap.exists()) {
+            setRole(docSnap.data().role);
+          } else {
+            // This case handles new users (e.g., first-time Google sign-in)
+            // It also ensures that if a user's doc is deleted, they get reset to 'customer'
+            await setDoc(userDocRef, { email: user.email, role: 'customer' });
+            setRole('customer');
+          }
+          setLoading(false);
+        }, (error) => {
+            console.error("Error listening to user role:", error);
+            // On error, log out the user's state in the app
+            setUser(null);
+            setRole(null);
+            setLoading(false);
+        });
 
       } else {
+        // User is signed out
         setUser(null);
         setRole(null);
+        setLoading(false);
       }
-      setLoading(false);
     });
 
-    return () => unsubscribe();
+    // Cleanup function to unsubscribe from listeners when the component unmounts
+    return () => {
+        authUnsubscribe();
+        if (roleUnsubscribe) {
+            roleUnsubscribe();
+        }
+    };
   }, []);
 
   return (
     <AuthContext.Provider value={{ user, role, loading }}>
+      {/* Don't render children until the initial auth state and role are determined */}
       {loading ? null : children}
     </AuthContext.Provider>
   );
