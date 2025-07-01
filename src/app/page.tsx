@@ -6,41 +6,9 @@ import { Footer } from "@/components/footer";
 import { ProductCard } from "@/components/product-card";
 import { ContactForm } from "@/components/contact-form";
 import { Button } from "@/components/ui/button";
+import { products as allProducts } from "@/lib/data";
 
-const products = [
-  {
-    id: 1,
-    name: "Modern Waterfall Faucet",
-    description: "Sleek chrome finish with a unique waterfall design.",
-    price: "129.99",
-    imageUrl: "https://placehold.co/600x600.png",
-    imageHint: "waterfall faucet",
-  },
-  {
-    id: 2,
-    name: "Rainfall Shower Head",
-    description: "Experience luxury with this 12-inch rainfall shower head.",
-    price: "199.99",
-    imageUrl: "https://placehold.co/600x600.png",
-    imageHint: "rainfall shower",
-  },
-  {
-    id: 3,
-    name: "Vessel Sink & Pop-up Drain",
-    description: "Elegant ceramic vessel sink for a contemporary look.",
-    price: "249.99",
-    imageUrl: "https://placehold.co/600x600.png",
-    imageHint: "vessel sink",
-  },
-   {
-    id: 4,
-    name: "Minimalist Towel Rack",
-    description: "Brushed nickel towel rack with a clean, simple design.",
-    price: "79.99",
-    imageUrl: "https://placehold.co/600x600.png",
-    imageHint: "towel rack",
-  },
-];
+const products = allProducts.filter((product) => product.featured);
 
 export default function Home() {
   return (
@@ -66,7 +34,7 @@ export default function Home() {
               Discover our premium collection of hardware that combines modern design with timeless quality.
             </p>
             <Button size="lg" className="mt-8" asChild>
-              <a href="#products">Shop Collection</a>
+              <a href="/products">Shop Collection</a>
             </Button>
           </div>
         </section>
