@@ -103,7 +103,7 @@ export const ProductForm = () => {
                   <FormControl>
                     <Input
                       type="number"
-                      placeholder="9.99"
+                      placeholder="5000.00"
                       {...field}
                     />
                   </FormControl>

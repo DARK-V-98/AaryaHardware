@@ -20,7 +20,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "price",
     header: "Price",
-    cell: ({ row }) => `$${row.original.price}`,
+    cell: ({ row }) => `LKR ${row.original.price}`,
   },
   {
     accessorKey: "featured",

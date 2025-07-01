@@ -36,7 +36,7 @@ export function ProductCard({ name, description, price, imageUrl, imageHint }: P
         <CardDescription className="text-sm text-muted-foreground">{description}</CardDescription>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
-        <p className="text-lg font-bold text-primary">${price}</p>
+        <p className="text-lg font-bold text-primary">LKR {price}</p>
         <Button variant="outline">View Details</Button>
       </CardFooter>
     </Card>
