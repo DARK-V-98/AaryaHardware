@@ -22,19 +22,23 @@ export function AuthGuard({ children }: AuthGuardProps) {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center py-16">
         <Loader2 className="h-16 w-16 animate-spin" />
       </div>
     );
   }
 
   if (!user) {
-    return null;
+     return (
+        <div className="flex justify-center items-center py-16">
+          <Loader2 className="h-16 w-16 animate-spin" />
+        </div>
+      );
   }
   
   if (role !== 'admin') {
     return (
-      <div className="flex flex-col justify-center items-center min-h-screen text-center p-4">
+      <div className="flex flex-col justify-center items-center text-center py-16">
         <h1 className="text-2xl font-bold">Access Denied</h1>
         <p className="text-muted-foreground mt-2">You do not have permission to view this page.</p>
         <Button onClick={() => router.push('/')} className="mt-6">Go to Homepage</Button>

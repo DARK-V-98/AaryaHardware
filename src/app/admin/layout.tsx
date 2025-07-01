@@ -1,5 +1,7 @@
 import { AdminNav } from "@/components/admin-nav";
 import { AuthGuard } from "@/components/auth-guard";
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
 
 export default function AdminLayout({
   children,
@@ -7,13 +9,15 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <AuthGuard>
-      <div className="flex min-h-screen bg-background">
-        <AdminNav />
-        <main className="flex-1 p-4 sm:p-6 md:p-8">
-          {children}
+    <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-1 container mx-auto px-4 py-8">
+            <AuthGuard>
+                <AdminNav />
+                {children}
+            </AuthGuard>
         </main>
-      </div>
-    </AuthGuard>
+        <Footer />
+    </div>
   );
 }
