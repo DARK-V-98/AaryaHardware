@@ -23,6 +23,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/context/auth-context";
 import { auth } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
+import { Badge } from "@/components/ui/badge";
 
 export function Header() {
   const { user, role, loading } = useAuth();
@@ -88,6 +89,12 @@ export function Header() {
                           {user.email}
                         </p>
                       </div>
+                       {role && (
+                        <div className="flex items-center pt-2">
+                            <p className="text-xs leading-none text-muted-foreground">Role:</p>
+                            <Badge variant={role === 'admin' ? 'default' : 'secondary'} className="ml-2 capitalize">{role}</Badge>
+                        </div>
+                      )}
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout}>
