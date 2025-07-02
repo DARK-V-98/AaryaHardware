@@ -9,7 +9,6 @@ import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestor
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ProductCard } from "@/components/product-card";
-import { ContactForm } from "@/components/contact-form";
 import { Button } from "@/components/ui/button";
 import { firestore } from '@/lib/firebase';
 import { Product, Category } from '@/lib/data';
@@ -129,26 +128,23 @@ export default function Home() {
         <section id="contact" className="py-16 md:py-24">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Get In Touch</h2>
-            <div className="max-w-4xl mx-auto grid md:grid-cols-5 gap-12">
-              <div className="md:col-span-2 space-y-6">
-                <h3 className="text-xl font-semibold">Our Showroom</h3>
-                <p className="text-muted-foreground">
-                  Visit us to experience our collection firsthand. Our team is ready to assist you.
-                </p>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                    <p className="text-muted-foreground">Aarya Hardware No. 377 old kottawa road,<br/>kottawa</p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Phone className="h-5 w-5 text-primary flex-shrink-0" />
-                    <p className="text-muted-foreground">+94782404099</p>
-                  </div>
+            <div className="max-w-lg mx-auto bg-card p-8 md:p-12 rounded-xl shadow-lg border">
+                <div className="text-center space-y-6">
+                    <h3 className="text-2xl font-semibold">Our Showroom</h3>
+                    <p className="text-muted-foreground">
+                    Visit us to experience our collection firsthand. Our team is ready to assist you.
+                    </p>
+                    <div className="space-y-4 inline-block text-left pt-2">
+                        <div className="flex items-start gap-4">
+                            <MapPin className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
+                            <p className="text-muted-foreground">Aarya Hardware No. 377 old kottawa road,<br/>kottawa</p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <Phone className="h-6 w-6 text-primary flex-shrink-0" />
+                            <p className="text-muted-foreground">+94782404099</p>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div className="md:col-span-3">
-                <ContactForm />
-              </div>
             </div>
           </div>
         </section>
