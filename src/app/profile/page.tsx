@@ -89,7 +89,7 @@ export default function ProfilePage() {
                 <TableBody>
                   {orders.map((order) => (
                     <TableRow key={order.id}>
-                      <TableCell className="font-mono text-sm">{order.id.substring(0, 7)}...</TableCell>
+                      <TableCell className="font-mono text-sm">{order.id}</TableCell>
                       <TableCell>{format(order.createdAt.toDate(), 'MMM dd, yyyy')}</TableCell>
                       <TableCell>
                         <Badge variant={getStatusVariant(order.status)} className="capitalize">

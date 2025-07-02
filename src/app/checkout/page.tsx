@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { runTransaction, doc, collection, serverTimestamp } from 'firebase/firestore';
+import { runTransaction, doc, collection, serverTimestamp, getDoc } from 'firebase/firestore';
 
 import { firestore } from '@/lib/firebase';
 import { useAuth } from '@/context/auth-context';
@@ -39,6 +39,32 @@ const formSchema = z.object({
 
 type ShippingFormValues = z.infer<typeof formSchema>;
 
+
+const generateOrderId = async (): Promise<string> => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const nums = '0123456789';
+    let isUnique = false;
+    let orderId = '';
+
+    while (!isUnique) {
+        let result = '';
+        for (let i = 0; i < 2; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        for (let i = 0; i < 5; i++) {
+            result += nums.charAt(Math.floor(Math.random() * nums.length));
+        }
+        
+        const docRef = doc(firestore, 'orders', result);
+        const docSnap = await getDoc(docRef);
+        if (!docSnap.exists()) {
+            isUnique = true;
+            orderId = result;
+        }
+    }
+    return orderId;
+};
+
 export default function CheckoutPage() {
   const { user } = useAuth();
   const { cartItems, cartCount, subtotal, clearCart } = useCart();
@@ -67,10 +93,11 @@ export default function CheckoutPage() {
     }
     setLoading(true);
     
-    const newOrderRef = doc(collection(firestore, "orders"));
-    const status: Order['status'] = data.paymentMethod === 'Bank Transfer' ? 'Pending Payment' : 'Processing';
-
     try {
+        const orderId = await generateOrderId();
+        const newOrderRef = doc(firestore, "orders", orderId);
+        const status: Order['status'] = data.paymentMethod === 'Bank Transfer' ? 'Pending Payment' : 'Processing';
+
         await runTransaction(firestore, async (transaction) => {
             const productUpdates: { ref: any; newQuantity: number }[] = [];
 
@@ -116,7 +143,7 @@ export default function CheckoutPage() {
 
         clearCart();
         toast({ title: 'Order Placed!', description: 'Your order has been successfully placed.' });
-        router.push(`/order-confirmation/${newOrderRef.id}`);
+        router.push(`/order-confirmation/${orderId}`);
 
     } catch (error: any) {
         console.error("Checkout error:", error);
