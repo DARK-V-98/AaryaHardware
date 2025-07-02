@@ -2,6 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import { Order } from '@/lib/data';
@@ -13,22 +14,15 @@ import { StatusUpdater } from './status-updater';
 import { Badge } from '@/components/ui/badge';
 import { Banknote, Truck } from 'lucide-react';
 
-
-interface OrderPageProps {
-  params: {
-    orderId: string;
-  };
-}
-
-export default function OrderPage({ params }: OrderPageProps) {
+export default function OrderPage() {
+  const params = useParams<{ orderId: string }>();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
-  const { orderId } = params;
 
   useEffect(() => {
-    if (!orderId) return;
+    if (!params.orderId) return;
     
-    const docRef = doc(firestore, 'orders', orderId);
+    const docRef = doc(firestore, 'orders', params.orderId);
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         setOrder({ id: docSnap.id, ...docSnap.data() } as Order);
@@ -42,7 +36,7 @@ export default function OrderPage({ params }: OrderPageProps) {
     });
 
     return () => unsubscribe();
-  }, [orderId]);
+  }, [params.orderId]);
 
   if (loading) {
     return (

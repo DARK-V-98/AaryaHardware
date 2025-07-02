@@ -2,6 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import { useAuth } from '@/context/auth-context';
@@ -15,28 +16,22 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Banknote, Truck } from 'lucide-react';
 
-interface OrderPageProps {
-  params: {
-    orderId: string;
-  };
-}
-
-export default function UserOrderPage({ params }: OrderPageProps) {
+export default function UserOrderPage() {
+  const params = useParams<{ orderId: string }>();
   const { user, loading: authLoading } = useAuth();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { orderId } = params;
 
   useEffect(() => {
     if (authLoading || !user) return;
-    if (!orderId) {
+    if (!params.orderId) {
         setError("Invalid order ID.");
         setLoading(false);
         return;
     };
     
-    const docRef = doc(firestore, 'orders', orderId);
+    const docRef = doc(firestore, 'orders', params.orderId);
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         const orderData = { id: docSnap.id, ...docSnap.data() } as Order;
@@ -56,7 +51,7 @@ export default function UserOrderPage({ params }: OrderPageProps) {
     });
 
     return () => unsubscribe();
-  }, [orderId, user, authLoading]);
+  }, [params.orderId, user, authLoading]);
 
   const getStatusVariant = (status: Order['status']) => {
     switch (status) {

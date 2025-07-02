@@ -2,28 +2,23 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import { Product, Category } from '@/lib/data';
 import { ProductForm } from '../new/product-form';
 import { Loader2 } from 'lucide-react';
 
-interface EditProductPageProps {
-  params: {
-    productId: string;
-  };
-}
-
-export default function EditProductPage({ params }: EditProductPageProps) {
+export default function EditProductPage() {
+  const params = useParams<{ productId: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const { productId } = params;
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!productId) return;
+      if (!params.productId) return;
       try {
         // Fetch categories
         const categoriesCollection = await getDocs(collection(firestore, 'categories'));
@@ -31,7 +26,7 @@ export default function EditProductPage({ params }: EditProductPageProps) {
         setCategories(cats);
 
         // Fetch product
-        const docRef = doc(firestore, 'products', productId);
+        const docRef = doc(firestore, 'products', params.productId);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -49,7 +44,7 @@ export default function EditProductPage({ params }: EditProductPageProps) {
     };
     
     fetchData();
-  }, [productId]);
+  }, [params.productId]);
 
   if (loading) {
     return (

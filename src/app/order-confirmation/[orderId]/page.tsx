@@ -2,6 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import { Order } from '@/lib/data';
@@ -14,23 +15,17 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 
-interface OrderConfirmationPageProps {
-  params: {
-    orderId: string;
-  };
-}
-
-export default function OrderConfirmationPage({ params }: OrderConfirmationPageProps) {
+export default function OrderConfirmationPage() {
+  const params = useParams<{ orderId: string }>();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
-  const { orderId } = params;
 
   useEffect(() => {
     const fetchOrder = async () => {
-      if (!orderId) return;
+      if (!params.orderId) return;
       try {
-        const docRef = doc(firestore, 'orders', orderId);
+        const docRef = doc(firestore, 'orders', params.orderId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setOrder({ id: docSnap.id, ...docSnap.data() } as Order);
@@ -42,7 +37,7 @@ export default function OrderConfirmationPage({ params }: OrderConfirmationPageP
       }
     };
     fetchOrder();
-  }, [orderId]);
+  }, [params.orderId]);
 
   const copyToClipboard = (text: string, field: string) => {
     navigator.clipboard.writeText(text);

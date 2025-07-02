@@ -2,29 +2,24 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import { Category } from '@/lib/data';
 import { CategoryForm } from '../new/category-form';
 import { Loader2 } from 'lucide-react';
 
-interface EditCategoryPageProps {
-  params: {
-    categoryId: string;
-  };
-}
-
-export default function EditCategoryPage({ params }: EditCategoryPageProps) {
+export default function EditCategoryPage() {
+  const params = useParams<{ categoryId: string }>();
   const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const { categoryId } = params;
 
   useEffect(() => {
     const fetchCategory = async () => {
-      if (!categoryId) return;
+      if (!params.categoryId) return;
       try {
-        const docRef = doc(firestore, 'categories', categoryId);
+        const docRef = doc(firestore, 'categories', params.categoryId);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -42,7 +37,7 @@ export default function EditCategoryPage({ params }: EditCategoryPageProps) {
     };
     
     fetchCategory();
-  }, [categoryId]);
+  }, [params.categoryId]);
 
   if (loading) {
     return (
