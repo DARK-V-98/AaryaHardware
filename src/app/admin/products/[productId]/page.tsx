@@ -1,12 +1,12 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
-import { Product } from '@/lib/data';
+import { Product, Category } from '@/lib/data';
 import { ProductForm } from '../new/product-form';
 import { Loader2 } from 'lucide-react';
-import { notFound } from 'next/navigation';
 
 interface EditProductPageProps {
   params: {
@@ -16,12 +16,19 @@ interface EditProductPageProps {
 
 export default function EditProductPage({ params }: EditProductPageProps) {
   const [product, setProduct] = useState<Product | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchData = async () => {
       try {
+        // Fetch categories
+        const categoriesCollection = await getDocs(collection(firestore, 'categories'));
+        const cats = categoriesCollection.docs.map(doc => ({ id: doc.id, ...doc.data() } as Category));
+        setCategories(cats);
+
+        // Fetch product
         const docRef = doc(firestore, 'products', params.productId);
         const docSnap = await getDoc(docRef);
 
@@ -33,13 +40,13 @@ export default function EditProductPage({ params }: EditProductPageProps) {
         }
       } catch (err) {
         setError(true);
-        console.error('Error fetching product:', err);
+        console.error('Error fetching data:', err);
       } finally {
         setLoading(false);
       }
     };
     
-    fetchProduct();
+    fetchData();
   }, [params.productId]);
 
   if (loading) {
@@ -62,7 +69,7 @@ export default function EditProductPage({ params }: EditProductPageProps) {
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4">
-        <ProductForm initialData={product} />
+        <ProductForm initialData={product} categories={categories} />
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -7,6 +8,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
     { href: "/admin", label: "Dashboard" },
     { href: "/admin/products", label: "Products" },
+    { href: "/admin/categories", label: "Categories" },
   ];
 
 export function AdminNav() {

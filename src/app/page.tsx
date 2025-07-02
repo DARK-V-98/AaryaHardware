@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Image from "next/image";
 import { MapPin, Phone, Loader2 } from "lucide-react";
 import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';
@@ -11,12 +12,15 @@ import { ProductCard } from "@/components/product-card";
 import { ContactForm } from "@/components/contact-form";
 import { Button } from "@/components/ui/button";
 import { firestore } from '@/lib/firebase';
-import { Product } from '@/lib/data';
+import { Product, Category } from '@/lib/data';
+import { ProductDetailModal } from '@/components/product-detail-modal';
 
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     const q = query(
@@ -35,9 +39,19 @@ export default function Home() {
       console.error("Error fetching featured products: ", error);
       setLoading(false);
     });
+    
+    const categoriesUnsubscribe = onSnapshot(collection(firestore, 'categories'), (snapshot) => {
+        const cats = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Category));
+        setCategories(cats);
+    });
 
-    return () => unsubscribe();
+    return () => {
+        unsubscribe();
+        categoriesUnsubscribe();
+    };
   }, []);
+
+  const categoryMap = useMemo(() => new Map(categories.map(c => [c.id, c.name])), [categories]);
 
 
   return (
@@ -81,7 +95,9 @@ export default function Home() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {products.map((product) => (
-                  <ProductCard key={product.id} {...product} />
+                   <div key={product.id} onClick={() => setSelectedProduct(product)} className="cursor-pointer">
+                    <ProductCard {...product} />
+                  </div>
                 ))}
               </div>
             )}
@@ -139,6 +155,14 @@ export default function Home() {
         </section>
       </main>
       <Footer />
+       {selectedProduct && (
+        <ProductDetailModal
+          product={selectedProduct}
+          categoryName={categoryMap.get(selectedProduct.categoryId) || "Uncategorized"}
+          isOpen={!!selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </div>
   );
 }

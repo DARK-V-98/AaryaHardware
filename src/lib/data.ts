@@ -1,3 +1,4 @@
+
 export type Product = {
   id: string;
   name: string;
@@ -6,9 +7,18 @@ export type Product = {
   imageUrl: string;
   imageHint: string;
   featured: boolean;
+  categoryId: string;
   createdAt?: any;
   updatedAt?: any;
 };
+
+export type Category = {
+  id: string;
+  name: string;
+  createdAt?: any;
+  updatedAt?: any;
+};
+
 
 // Products are now fetched from Firestore.
 // This file is kept for the type definition.

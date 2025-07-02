@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as z from "zod";
@@ -12,14 +13,21 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Product } from "@/lib/data";
-import { useEffect, useState } from "react";
+import { Product, Category } from "@/lib/data";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -34,6 +42,7 @@ const formSchema = z.object({
   image: z.any().refine(files => {
     return files?.[0] ? true : false;
   }, 'Image is required.').or(z.string()),
+  categoryId: z.string().min(1, "Category is required"),
   featured: z.boolean().default(false),
   imageHint: z.string().min(1, "Image hint is required"),
 });
@@ -42,6 +51,7 @@ type ProductFormValues = z.infer<typeof formSchema>;
 
 interface ProductFormProps {
   initialData: Product | null;
+  categories: Category[];
 }
 
 const Heading: React.FC<{title: string, description: string}> = ({ title, description }) => {
@@ -53,7 +63,7 @@ const Heading: React.FC<{title: string, description: string}> = ({ title, descri
     );
 };
 
-export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
+export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories }) => {
   const { toast } = useToast();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -77,6 +87,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
       description: "",
       price: 0,
       image: "",
+      categoryId: "",
       featured: false,
       imageHint: "",
     },
@@ -99,7 +110,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
       setLoading(true);
       let imageUrl = initialData?.imageUrl || "";
 
-      // Check if a new image file was uploaded
       if (data.image && typeof data.image !== 'string') {
         const file = data.image[0];
         const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
@@ -123,17 +133,16 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
         description: data.description,
         price: data.price,
         imageUrl,
+        categoryId: data.categoryId,
         featured: data.featured,
         imageHint: data.imageHint,
         updatedAt: serverTimestamp(),
       };
 
       if (initialData) {
-        // Update existing product
         const productRef = doc(firestore, 'products', initialData.id);
         await updateDoc(productRef, productData);
       } else {
-        // Create new product
         await addDoc(collection(firestore, 'products'), {
           ...productData,
           createdAt: serverTimestamp(),
@@ -229,6 +238,30 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                       disabled={loading}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="categoryId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value} disabled={loading}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

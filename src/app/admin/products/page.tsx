@@ -1,32 +1,44 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
-import { Product } from '@/lib/data';
+import { Product, Category } from '@/lib/data';
 import { ProductClient } from './components/client';
 import { ProductColumn } from './components/columns';
 import { Loader2 } from 'lucide-react';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const q = query(collection(firestore, 'products'), orderBy('createdAt', 'desc'));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const prods: Product[] = [];
-      querySnapshot.forEach((doc) => {
-        prods.push({ id: doc.id, ...doc.data() } as Product);
-      });
+    const productsQuery = query(collection(firestore, 'products'), orderBy('createdAt', 'desc'));
+    const productsUnsubscribe = onSnapshot(productsQuery, (querySnapshot) => {
+      const prods: Product[] = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
       setProducts(prods);
-      setLoading(false);
+      if (categories.length > 0) setLoading(false);
     }, (error) => {
       console.error("Error fetching products: ", error);
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    const categoriesQuery = query(collection(firestore, 'categories'));
+    const categoriesUnsubscribe = onSnapshot(categoriesQuery, (querySnapshot) => {
+      const cats: Category[] = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Category));
+      setCategories(cats);
+      if (products.length > 0 || querySnapshot.empty) setLoading(false);
+    }, (error) => {
+      console.error("Error fetching categories: ", error);
+      setLoading(false);
+    });
+
+    return () => {
+      productsUnsubscribe();
+      categoriesUnsubscribe();
+    };
   }, []);
 
   if (loading) {
@@ -37,10 +49,13 @@ export default function ProductsPage() {
     );
   }
 
+  const categoryMap = new Map(categories.map(cat => [cat.id, cat.name]));
+
   const formattedProducts: ProductColumn[] = products.map((item) => ({
     id: item.id,
     name: item.name,
     price: item.price.toFixed(2),
+    category: categoryMap.get(item.categoryId) || "Uncategorized",
     featured: item.featured,
     imageUrl: item.imageUrl,
   }));
