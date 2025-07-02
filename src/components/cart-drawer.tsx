@@ -18,10 +18,27 @@ import { useCart } from "@/context/cart-context";
 import Image from "next/image";
 import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/auth-context";
+import { useToast } from "@/hooks/use-toast";
 
 export function CartDrawer() {
   const { cartItems, cartCount, removeFromCart, updateQuantity, subtotal } = useCart();
   const router = useRouter();
+  const { user } = useAuth();
+  const { toast } = useToast();
+
+  const handleCheckout = () => {
+    if (user) {
+      router.push('/checkout');
+    } else {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to proceed to checkout.",
+        variant: "destructive"
+      });
+      router.push('/login');
+    }
+  }
   
   return (
     <Sheet>
@@ -81,7 +98,7 @@ export function CartDrawer() {
                         <span>LKR {subtotal.toFixed(2)}</span>
                     </div>
                     <SheetClose asChild>
-                        <Button className="w-full" onClick={() => router.push('/checkout')}>
+                        <Button className="w-full" onClick={handleCheckout}>
                             Proceed to Checkout
                         </Button>
                     </SheetClose>

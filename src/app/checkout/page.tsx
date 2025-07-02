@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '@/context/cart-context';
 import { useRouter } from 'next/navigation';
 import * as z from 'zod';
@@ -66,11 +66,22 @@ const generateOrderId = async (): Promise<string> => {
 };
 
 export default function CheckoutPage() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { cartItems, cartCount, subtotal, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to proceed to checkout.",
+        variant: "destructive",
+      });
+      router.replace('/login');
+    }
+  }, [user, authLoading, router, toast]);
 
   const form = useForm<ShippingFormValues>({
     resolver: zodResolver(formSchema),
@@ -85,6 +96,22 @@ export default function CheckoutPage() {
       paymentMethod: 'Bank Transfer'
     },
   });
+
+  // Re-initialize form when user data becomes available
+  useEffect(() => {
+    if (user) {
+        form.reset({
+            name: form.getValues().name,
+            email: user.email || '',
+            phone: form.getValues().phone,
+            addressLine1: form.getValues().addressLine1,
+            addressLine2: form.getValues().addressLine2,
+            city: form.getValues().city,
+            postalCode: form.getValues().postalCode,
+            paymentMethod: form.getValues().paymentMethod,
+        });
+    }
+  }, [user, form]);
 
   const onSubmit = async (data: ShippingFormValues) => {
     if (cartCount === 0) {
@@ -152,6 +179,18 @@ export default function CheckoutPage() {
         setLoading(false);
     }
   };
+
+  if (authLoading || !user) {
+    return (
+      <div className="flex flex-col min-h-dvh bg-background">
+        <Header />
+        <main className="flex-1 flex justify-center items-center">
+            <Loader2 className="h-16 w-16 animate-spin" />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
   
   return (
     <div className="flex flex-col min-h-dvh bg-background">
