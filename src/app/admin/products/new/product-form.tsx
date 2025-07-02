@@ -39,6 +39,7 @@ const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
   price: z.coerce.number().min(0),
+  discountPrice: z.coerce.number().nullable().optional(),
   image: z.any().refine(files => {
     return files?.[0] ? true : false;
   }, 'Image is required.').or(z.string()),
@@ -80,12 +81,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
     { 
       ...initialData,
       price: Number(initialData.price), 
+      discountPrice: initialData.discountPrice ? Number(initialData.discountPrice) : null,
       image: initialData.imageUrl 
     } : 
     {
       name: "",
       description: "",
       price: 0,
+      discountPrice: null,
       image: "",
       categoryId: "",
       featured: false,
@@ -132,6 +135,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
         name: data.name,
         description: data.description,
         price: data.price,
+        discountPrice: data.discountPrice || null,
         imageUrl,
         categoryId: data.categoryId,
         featured: data.featured,
@@ -238,6 +242,29 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
                       disabled={loading}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="discountPrice"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Discount Price (LKR)</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="4500.00"
+                      {...field}
+                      value={field.value ?? ''}
+                      onChange={(e) => field.onChange(e.target.value === '' ? null : +e.target.value)}
+                      disabled={loading}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Optional: Leave blank if no discount.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

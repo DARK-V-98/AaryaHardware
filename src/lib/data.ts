@@ -4,6 +4,7 @@ export type Product = {
   name: string;
   description: string;
   price: number;
+  discountPrice?: number | null;
   imageUrl: string;
   imageHint: string;
   featured: boolean;

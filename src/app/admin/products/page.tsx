@@ -55,6 +55,7 @@ export default function ProductsPage() {
     id: item.id,
     name: item.name,
     price: item.price.toFixed(2),
+    discountPrice: item.discountPrice ? item.discountPrice.toFixed(2) : undefined,
     category: categoryMap.get(item.categoryId) || "Uncategorized",
     featured: item.featured,
     imageUrl: item.imageUrl,

@@ -10,6 +10,7 @@ export type ProductColumn = {
   id: string;
   name: string;
   price: string;
+  discountPrice?: string;
   category: string;
   featured: boolean;
   imageUrl: string;
@@ -27,7 +28,23 @@ export const columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "price",
     header: "Price",
-    cell: ({ row }) => `LKR ${row.original.price}`,
+    cell: ({ row }) => {
+      const { price, discountPrice } = row.original;
+      const hasDiscount = discountPrice && parseFloat(discountPrice) > 0;
+      return (
+        <div>
+          {hasDiscount ? (
+            <>
+              <span className="line-through text-muted-foreground">LKR {price}</span>
+              <br />
+              <span className="text-primary font-bold">LKR {discountPrice}</span>
+            </>
+          ) : (
+            `LKR ${price}`
+          )}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "featured",

@@ -37,7 +37,20 @@ export function ProductDetailModal({ product, categoryName, isOpen, onClose }: P
               <DialogTitle className="text-3xl font-bold mb-2">{product.name}</DialogTitle>
             </DialogHeader>
              <div className="flex items-center gap-4 my-2">
-                <p className="text-2xl font-bold text-primary">LKR {product.price.toFixed(2)}</p>
+                 {product.discountPrice && product.discountPrice > 0 ? (
+                    <div className="flex items-baseline gap-2">
+                        <p className="text-xl text-muted-foreground line-through">
+                            LKR {product.price.toFixed(2)}
+                        </p>
+                        <p className="text-2xl font-bold text-primary">
+                            LKR {product.discountPrice.toFixed(2)}
+                        </p>
+                    </div>
+                ) : (
+                    <p className="text-2xl font-bold text-primary">
+                        LKR {product.price.toFixed(2)}
+                    </p>
+                )}
                 <Badge variant="secondary">{categoryName}</Badge>
             </div>
             <DialogDescription className="text-base text-muted-foreground mt-4 flex-grow">
