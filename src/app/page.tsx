@@ -1,16 +1,45 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Image from "next/image";
-import { MapPin, Phone } from "lucide-react";
+import { MapPin, Phone, Loader2 } from "lucide-react";
+import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';
 
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ProductCard } from "@/components/product-card";
 import { ContactForm } from "@/components/contact-form";
 import { Button } from "@/components/ui/button";
-import { products as allProducts } from "@/lib/data";
+import { firestore } from '@/lib/firebase';
+import { Product } from '@/lib/data';
 
-const products = allProducts.filter((product) => product.featured);
 
 export default function Home() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const q = query(
+      collection(firestore, 'products'), 
+      where('featured', '==', true),
+      orderBy('createdAt', 'desc')
+    );
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const prods: Product[] = [];
+      querySnapshot.forEach((doc) => {
+        prods.push({ id: doc.id, ...doc.data() } as Product);
+      });
+      setProducts(prods);
+      setLoading(false);
+    }, (error) => {
+      console.error("Error fetching featured products: ", error);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+
   return (
     <div className="flex flex-col min-h-dvh bg-background">
       <Header />
@@ -45,11 +74,17 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-headline">
               Featured Products
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {products.map((product) => (
-                <ProductCard key={product.id} {...product} />
-              ))}
-            </div>
+            {loading ? (
+              <div className="flex justify-center items-center py-8">
+                <Loader2 className="h-12 w-12 animate-spin" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {products.map((product) => (
+                  <ProductCard key={product.id} {...product} />
+                ))}
+              </div>
+            )}
           </div>
         </section>
         

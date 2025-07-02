@@ -10,6 +10,7 @@ export type ProductColumn = {
   name: string;
   price: string;
   featured: boolean;
+  imageUrl: string;
 };
 
 export const columns: ColumnDef<ProductColumn>[] = [

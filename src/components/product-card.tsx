@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 type ProductCardProps = {
   name: string;
   description: string;
-  price: string;
+  price: number;
   imageUrl: string;
   imageHint: string;
 };
@@ -36,7 +36,7 @@ export function ProductCard({ name, description, price, imageUrl, imageHint }: P
         <CardDescription className="text-sm text-muted-foreground">{description}</CardDescription>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
-        <p className="text-lg font-bold text-primary">LKR {price}</p>
+        <p className="text-lg font-bold text-primary">LKR {price.toFixed(2)}</p>
         <Button variant="outline">View Details</Button>
       </CardFooter>
     </Card>
