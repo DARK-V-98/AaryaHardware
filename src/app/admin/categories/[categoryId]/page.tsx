@@ -18,11 +18,13 @@ export default function EditCategoryPage({ params }: EditCategoryPageProps) {
   const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const { categoryId } = params;
 
   useEffect(() => {
     const fetchCategory = async () => {
+      if (!categoryId) return;
       try {
-        const docRef = doc(firestore, 'categories', params.categoryId);
+        const docRef = doc(firestore, 'categories', categoryId);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -40,7 +42,7 @@ export default function EditCategoryPage({ params }: EditCategoryPageProps) {
     };
     
     fetchCategory();
-  }, [params.categoryId]);
+  }, [categoryId]);
 
   if (loading) {
     return (

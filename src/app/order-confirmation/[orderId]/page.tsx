@@ -24,11 +24,13 @@ export default function OrderConfirmationPage({ params }: OrderConfirmationPageP
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const { orderId } = params;
 
   useEffect(() => {
     const fetchOrder = async () => {
+      if (!orderId) return;
       try {
-        const docRef = doc(firestore, 'orders', params.orderId);
+        const docRef = doc(firestore, 'orders', orderId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setOrder({ id: docSnap.id, ...docSnap.data() } as Order);
@@ -40,7 +42,7 @@ export default function OrderConfirmationPage({ params }: OrderConfirmationPageP
       }
     };
     fetchOrder();
-  }, [params.orderId]);
+  }, [orderId]);
 
   const copyToClipboard = (text: string, field: string) => {
     navigator.clipboard.writeText(text);
