@@ -39,6 +39,8 @@ export type ShippingAddress = {
     email: string;
 };
 
+export type PaymentMethod = 'Bank Transfer' | 'Cash on Delivery';
+
 export type OrderStatus = 'Pending Payment' | 'Processing' | 'Shipped' | 'Completed' | 'Cancelled';
 
 export type Order = {
@@ -48,6 +50,7 @@ export type Order = {
   totalAmount: number;
   status: OrderStatus;
   shippingAddress: ShippingAddress;
+  paymentMethod: PaymentMethod;
   createdAt: any;
   updatedAt: any;
 };

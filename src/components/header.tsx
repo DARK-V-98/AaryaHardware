@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Droplet, User as UserIcon, LogOut } from "lucide-react";
+import { Menu, Droplet, User as UserIcon, LogOut, LayoutGrid } from "lucide-react";
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import {
@@ -47,7 +47,6 @@ export function Header() {
     { href: "/products", label: "Products" },
     { href: "/#about", label: "About Us" },
     { href: "/#contact", label: "Contact" },
-    ...(role === 'admin' ? [{ href: "/admin", label: "Admin" }] : []),
   ];
 
   return (
@@ -67,6 +66,9 @@ export function Header() {
               {link.label}
             </Link>
           ))}
+           {role === 'admin' && (
+             <Link href="/admin" className="transition-colors hover:text-primary">Admin</Link>
+           )}
         </nav>
         <div className="flex items-center gap-4">
           {!loading && (
@@ -99,6 +101,17 @@ export function Header() {
                       )}
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                     <DropdownMenuItem onClick={() => router.push('/profile')}>
+                      <UserIcon className="mr-2 h-4 w-4" />
+                      <span>My Profile</span>
+                    </DropdownMenuItem>
+                    {role === 'admin' && (
+                       <DropdownMenuItem onClick={() => router.push('/admin')}>
+                        <LayoutGrid className="mr-2 h-4 w-4" />
+                        <span>Admin Dashboard</span>
+                      </DropdownMenuItem>
+                    )}
+                    <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout}>
                       <LogOut className="mr-2 h-4 w-4" />
                       <span>Log out</span>
@@ -130,7 +143,7 @@ export function Header() {
                     Aarya Hardware
                   </Link>
                   <nav className="flex flex-col gap-4">
-                    {navLinks.map((link) => (
+                    {[...navLinks, ...(role === 'admin' ? [{ href: "/admin", label: "Admin" }] : [])].map((link) => (
                       <SheetClose asChild key={link.label}>
                         <Link
                           href={link.href}

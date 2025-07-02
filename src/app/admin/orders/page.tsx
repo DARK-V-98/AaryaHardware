@@ -45,6 +45,7 @@ export default function OrdersPage() {
     items: item.items.reduce((total, current) => total + current.quantity, 0),
     total: `LKR ${item.totalAmount.toFixed(2)}`,
     status: item.status,
+    paymentMethod: item.paymentMethod,
     createdAt: format(item.createdAt.toDate(), 'MMMM do, yyyy'),
   }));
 

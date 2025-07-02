@@ -4,7 +4,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 import { Badge } from "@/components/ui/badge";
-import type { Order } from "@/lib/data";
+import type { Order, PaymentMethod } from "@/lib/data";
+import { Banknote, Truck } from "lucide-react";
 
 export type OrderColumn = {
   id: string;
@@ -12,6 +13,7 @@ export type OrderColumn = {
   items: number;
   total: string;
   status: string;
+  paymentMethod: PaymentMethod;
   createdAt: string;
 };
 
@@ -50,6 +52,16 @@ export const columns: ColumnDef<OrderColumn>[] = [
         <Badge variant={getStatusVariant(row.original.status as Order['status'])} className="capitalize">
             {row.original.status}
         </Badge>
+    )
+  },
+  {
+    accessorKey: "paymentMethod",
+    header: "Payment",
+    cell: ({ row }) => (
+        <div className="flex items-center gap-2">
+            {row.original.paymentMethod === 'Bank Transfer' ? <Banknote className="h-4 w-4 text-muted-foreground" /> : <Truck className="h-4 w-4 text-muted-foreground" />}
+            <span className="capitalize">{row.original.paymentMethod}</span>
+        </div>
     )
   },
   {

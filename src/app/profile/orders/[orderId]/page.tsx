@@ -4,15 +4,16 @@
 import { useEffect, useState } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
+import { useAuth } from '@/context/auth-context';
 import { Order } from '@/lib/data';
 import { Loader2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { format } from 'date-fns';
-import { StatusUpdater } from './status-updater';
 import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import { Banknote, Truck } from 'lucide-react';
-
 
 interface OrderPageProps {
   params: {
@@ -20,31 +21,55 @@ interface OrderPageProps {
   };
 }
 
-export default function OrderPage({ params }: OrderPageProps) {
+export default function UserOrderPage({ params }: OrderPageProps) {
+  const { user, loading: authLoading } = useAuth();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const { orderId } = params;
 
   useEffect(() => {
-    if (!orderId) return;
+    if (authLoading || !user) return;
+    if (!orderId) {
+        setError("Invalid order ID.");
+        setLoading(false);
+        return;
+    };
     
     const docRef = doc(firestore, 'orders', orderId);
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
-        setOrder({ id: docSnap.id, ...docSnap.data() } as Order);
+        const orderData = { id: docSnap.id, ...docSnap.data() } as Order;
+        if (orderData.userId === user.uid) {
+            setOrder(orderData);
+        } else {
+            setError("You do not have permission to view this order.");
+        }
       } else {
-        setOrder(null);
+        setError("Order not found.");
       }
       setLoading(false);
-    }, (error) => {
-        console.error("Error fetching order:", error);
+    }, (err) => {
+        console.error("Error fetching order:", err);
+        setError("Failed to fetch order details.");
         setLoading(false);
     });
 
     return () => unsubscribe();
-  }, [orderId]);
+  }, [orderId, user, authLoading]);
 
-  if (loading) {
+  const getStatusVariant = (status: Order['status']) => {
+    switch (status) {
+        case 'Pending Payment': return 'secondary';
+        case 'Processing': return 'default';
+        case 'Shipped': return 'default';
+        case 'Completed': return 'default';
+        case 'Cancelled': return 'destructive';
+        default: return 'outline';
+    }
+  }
+
+  if (loading || authLoading) {
     return (
       <div className="flex justify-center items-center py-16">
         <Loader2 className="h-16 w-16 animate-spin" />
@@ -52,30 +77,16 @@ export default function OrderPage({ params }: OrderPageProps) {
     );
   }
 
-  if (!order) {
+  if (error || !order) {
     return (
       <div className="flex flex-col justify-center items-center text-center py-16">
-        <h1 className="text-2xl font-bold">Order not found</h1>
-        <p className="text-muted-foreground mt-2">The order you are looking for does not exist.</p>
+        <h1 className="text-2xl font-bold">{error || "Order not found"}</h1>
+        <p className="text-muted-foreground mt-2">The order you are looking for does not exist or you don't have access.</p>
+         <Button asChild className="mt-6">
+            <Link href="/profile">Back to My Orders</Link>
+        </Button>
       </div>
     );
-  }
-
-  const getStatusVariant = (status: Order['status']) => {
-    switch (status) {
-        case 'Pending Payment':
-            return 'secondary';
-        case 'Processing':
-            return 'default';
-        case 'Shipped':
-            return 'default';
-        case 'Completed':
-            return 'default';
-        case 'Cancelled':
-            return 'destructive';
-        default:
-            return 'outline';
-    }
   }
 
   return (
@@ -121,28 +132,17 @@ export default function OrderPage({ params }: OrderPageProps) {
                         </div>
                     </CardContent>
                 </Card>
-                 <Card>
-                    <CardHeader>
-                        <CardTitle>Payment Information</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                       <div className="flex items-center gap-2">
-                        {order.paymentMethod === 'Bank Transfer' ? <Banknote /> : <Truck />}
-                        <span className="font-medium">{order.paymentMethod}</span>
-                       </div>
-                    </CardContent>
-                </Card>
             </div>
             <div className="space-y-6">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Customer Details</CardTitle>
+                        <CardTitle>Shipping Address</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-2">
-                        <p className="font-medium">{order.shippingAddress.name}</p>
-                        <p className="text-muted-foreground">{order.shippingAddress.email}</p>
-                        <p className="text-muted-foreground">{order.shippingAddress.phone}</p>
-                        <p className="text-muted-foreground pt-2">
+                    <CardContent className="space-y-1 text-muted-foreground">
+                        <p className="font-medium text-foreground">{order.shippingAddress.name}</p>
+                        <p>{order.shippingAddress.email}</p>
+                        <p>{order.shippingAddress.phone}</p>
+                        <p className="pt-2">
                             {order.shippingAddress.addressLine1}<br/>
                             {order.shippingAddress.addressLine2 && <>{order.shippingAddress.addressLine2}<br/></>}
                             {order.shippingAddress.city}, {order.shippingAddress.postalCode}
@@ -151,13 +151,27 @@ export default function OrderPage({ params }: OrderPageProps) {
                 </Card>
                  <Card>
                     <CardHeader>
-                        <CardTitle>Update Status</CardTitle>
+                        <CardTitle>Payment Information</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <StatusUpdater orderId={order.id} currentStatus={order.status} />
+                       <div className="flex items-center gap-2">
+                         {order.paymentMethod === 'Bank Transfer' ? <Banknote /> : <Truck />}
+                         <span className="font-medium">{order.paymentMethod}</span>
+                       </div>
+                       {order.paymentMethod === 'Bank Transfer' && order.status === 'Pending Payment' && (
+                           <p className="text-sm text-muted-foreground mt-2">Your payment is awaiting verification from our team.</p>
+                       )}
+                       {order.paymentMethod === 'Cash on Delivery' && (
+                           <p className="text-sm text-muted-foreground mt-2">Please prepare the total amount in cash for the delivery person.</p>
+                       )}
                     </CardContent>
                 </Card>
             </div>
+        </div>
+         <div className="text-center mt-8">
+            <Button asChild>
+                <Link href="/profile">Back to My Orders</Link>
+            </Button>
         </div>
     </div>
   );
