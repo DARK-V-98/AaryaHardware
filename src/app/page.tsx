@@ -59,7 +59,6 @@ export default function Home() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative w-full h-[70vh] md:h-[80vh] flex items-center text-white overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent z-10" />
           <Image
             src="/arb.jpg"
             alt="Beautiful bathroom scene"
@@ -68,10 +67,10 @@ export default function Home() {
             priority
           />
           <div className="relative z-20 container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-7xl font-bold mb-4">
+            <h1 className="text-4xl md:text-7xl font-bold mb-4 text-shadow">
               Elegance in Every Detail
             </h1>
-            <p className="text-lg md:text-xl max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl max-w-2xl mx-auto text-shadow-sm">
               Discover our premium collection of hardware that combines modern design with timeless quality.
             </p>
             <Button size="lg" className="mt-8">
