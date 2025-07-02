@@ -261,8 +261,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
                       type="number"
                       placeholder="4500.00"
                       {...field}
-                      value={field.value ?? ''}
-                      onChange={(e) => field.onChange(e.target.value === '' ? null : +e.target.value)}
+                      value={field.value ?? ""}
+                      onChange={(e) => {
+                        const value = e.target.valueAsNumber;
+                        field.onChange(isNaN(value) ? null : value);
+                      }}
                       disabled={loading}
                     />
                   </FormControl>
