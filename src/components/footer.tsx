@@ -13,7 +13,7 @@ const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 
 export function Footer() {
-  const whatsappUrl = `https://api.whatsapp.com/send?phone=+94782404099`;
+  const whatsappUrl = `https://wa.me/c/94782404099`;
 
   return (
     <footer className="border-t bg-card">
