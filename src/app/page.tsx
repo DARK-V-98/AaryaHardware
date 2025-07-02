@@ -138,7 +138,7 @@ export default function Home() {
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <MapPin className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                    <p className="text-muted-foreground">123 Hardware Avenue, Suite 100<br/>Aqua City, State 12345</p>
+                    <p className="text-muted-foreground">No. 377 Old Kottawa Road,<br/>Kottawa</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Phone className="h-5 w-5 text-primary flex-shrink-0" />
