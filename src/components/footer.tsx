@@ -30,7 +30,7 @@ export function Footer() {
                 <Youtube className="h-5 w-5" />
                 <span className="sr-only">YouTube</span>
             </a>
-            <a href="https://www.instagram.com/aaryahardware2019" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+            <a href="https://www.instagram.com/Aaryahardware2019" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
             </a>

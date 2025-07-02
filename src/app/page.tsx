@@ -59,24 +59,24 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative w-full h-[60vh] md:h-[70vh] flex items-center justify-center text-center text-white overflow-hidden">
-          <div className="absolute inset-0 bg-black/50 z-10" />
+        <section className="relative w-full h-[70vh] md:h-[80vh] flex items-center text-white overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent z-10" />
           <Image
-            src="/arb.jpg"
+            src="https://placehold.co/1920x1080.png"
             alt="Beautiful bathroom scene"
             fill
             className="object-cover"
-            data-ai-hint="elegant bathroom"
+            data-ai-hint="modern kitchen hardware"
             priority
           />
-          <div className="relative z-20 container mx-auto px-4">
-            <h1 className="text-4xl md:text-6xl font-headline font-bold mb-4 tracking-tight drop-shadow-lg">
+          <div className="relative z-20 container mx-auto px-4 text-left">
+            <h1 className="text-4xl md:text-7xl font-headline font-bold mb-4 text-shadow tracking-tight">
               Elegance in Every Detail
             </h1>
-            <p className="text-lg md:text-xl max-w-2xl mx-auto drop-shadow-md">
+            <p className="text-lg md:text-xl max-w-xl text-shadow-sm">
               Discover our premium collection of hardware that combines modern design with timeless quality.
             </p>
-            <Button size="lg" className="mt-8" asChild>
+            <Button size="lg" className="mt-8 shadow-lg">
               <a href="/products">Shop Collection</a>
             </Button>
           </div>
@@ -115,12 +115,12 @@ export default function Home() {
             </div>
              <div className="order-1 md:order-2">
                 <Image 
-                    src="https://placehold.co/600x400.png"
+                    src="https://placehold.co/800x600.png"
                     alt="Stylish faucet detail"
-                    width={600}
-                    height={400}
+                    width={800}
+                    height={600}
                     className="rounded-lg shadow-xl object-cover"
-                    data-ai-hint="stylish faucet"
+                    data-ai-hint="hardware showroom"
                 />
             </div>
           </div>
