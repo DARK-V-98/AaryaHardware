@@ -62,11 +62,10 @@ export default function Home() {
         <section className="relative w-full h-[70vh] md:h-[80vh] flex items-center text-white overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent z-10" />
           <Image
-            src="https://placehold.co/1920x1080.png"
+            src="/arb.jpg"
             alt="Beautiful bathroom scene"
             fill
             className="object-cover"
-            data-ai-hint="modern kitchen hardware"
             priority
           />
           <div className="relative z-20 container mx-auto px-4 text-center">
