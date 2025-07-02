@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -11,7 +10,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
-import { Loader2, Droplet } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -53,7 +53,7 @@ export default function LoginPage() {
       <div className="mx-auto grid w-full max-w-sm gap-6">
          <div className="grid gap-2 text-center">
            <Link href="/" className="flex items-center justify-center gap-2 font-bold text-2xl font-headline">
-              <Droplet className="h-7 w-7 text-primary" />
+              <Image src="/ar.jpg" alt="Aarya Hardware Logo" width={40} height={40} className="rounded-full" />
               Aarya Hardware
             </Link>
           <h1 className="text-3xl font-bold mt-4">Login</h1>
