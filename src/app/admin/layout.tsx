@@ -13,9 +13,9 @@ export default function AdminLayout({
         <Header />
         <main className="flex-1 container mx-auto px-4 py-8">
             <AuthGuard>
-                <div className="flex">
+                <div className="flex flex-col md:flex-row md:gap-6">
                     <AdminNav />
-                    <div className="flex-1 md:pl-6">
+                    <div className="flex-1">
                         {children}
                     </div>
                 </div>
