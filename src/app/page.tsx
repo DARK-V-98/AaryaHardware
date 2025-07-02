@@ -138,11 +138,11 @@ export default function Home() {
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <MapPin className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                    <p className="text-muted-foreground">No. 377 Old Kottawa Road,<br/>Kottawa</p>
+                    <p className="text-muted-foreground">Aarya Hardware No. 377 old kottawa road,<br/>kottawa</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Phone className="h-5 w-5 text-primary flex-shrink-0" />
-                    <p className="text-muted-foreground">(123) 456-7890</p>
+                    <p className="text-muted-foreground">+94782404099</p>
                   </div>
                 </div>
               </div>
