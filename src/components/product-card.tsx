@@ -9,15 +9,22 @@ import {
 import { Product } from "@/lib/data";
 
 export function ProductCard(product: Product) {
+  const isOutOfStock = product.quantity === 0;
+
   return (
     <Card className="flex flex-col overflow-hidden rounded-lg shadow-md transition-shadow hover:shadow-xl group h-full">
       <CardHeader className="p-0">
         <div className="aspect-square relative overflow-hidden">
+           {isOutOfStock && (
+            <div className="absolute inset-0 bg-black/60 z-10 flex items-center justify-center">
+              <span className="text-white font-bold text-lg tracking-wider">Out of Stock</span>
+            </div>
+          )}
           <Image
             src={product.imageUrl}
             alt={product.name}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            className={`object-cover group-hover:scale-105 transition-transform duration-300 ${isOutOfStock ? 'grayscale' : ''}`}
             data-ai-hint={product.imageHint}
           />
         </div>

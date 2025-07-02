@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -24,6 +25,7 @@ import { useAuth } from "@/context/auth-context";
 import { auth } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
+import { CartDrawer } from "./cart-drawer";
 
 export function Header() {
   const { user, role, loading } = useAuth();
@@ -66,7 +68,7 @@ export function Header() {
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           {!loading && (
             <>
               {user ? (
@@ -110,6 +112,8 @@ export function Header() {
               )}
             </>
           )}
+
+          <CartDrawer />
 
           <div className="md:hidden">
             <Sheet>

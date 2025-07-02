@@ -58,6 +58,7 @@ export default function ProductsPage() {
     discountPrice: item.discountPrice ? item.discountPrice.toFixed(2) : undefined,
     category: categoryMap.get(item.categoryId) || "Uncategorized",
     featured: item.featured,
+    quantity: item.quantity,
     imageUrl: item.imageUrl,
   }));
 

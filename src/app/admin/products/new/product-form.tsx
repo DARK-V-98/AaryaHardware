@@ -40,6 +40,7 @@ const formSchema = z.object({
   description: z.string().min(1, "Description is required"),
   price: z.coerce.number().min(0),
   discountPrice: z.coerce.number().nullable().optional(),
+  quantity: z.coerce.number().min(0, "Quantity must be 0 or more."),
   image: z.any().refine(files => {
     return files?.[0] ? true : false;
   }, 'Image is required.').or(z.string()),
@@ -82,6 +83,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
       ...initialData,
       price: Number(initialData.price), 
       discountPrice: initialData.discountPrice ? Number(initialData.discountPrice) : null,
+      quantity: Number(initialData.quantity),
       image: initialData.imageUrl 
     } : 
     {
@@ -89,6 +91,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
       description: "",
       price: 0,
       discountPrice: null,
+      quantity: 1,
       image: "",
       categoryId: "",
       featured: false,
@@ -136,6 +139,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
         description: data.description,
         price: data.price,
         discountPrice: data.discountPrice || null,
+        quantity: data.quantity,
         imageUrl,
         categoryId: data.categoryId,
         featured: data.featured,
@@ -264,6 +268,27 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
                   </FormControl>
                   <FormDescription>
                     Optional: Leave blank if no discount.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="quantity"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Quantity</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="10"
+                      {...field}
+                      disabled={loading}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Available stock.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

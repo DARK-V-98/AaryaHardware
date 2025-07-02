@@ -9,6 +9,7 @@ export type Product = {
   imageHint: string;
   featured: boolean;
   categoryId: string;
+  quantity: number;
   createdAt?: any;
   updatedAt?: any;
 };

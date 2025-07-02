@@ -13,6 +13,7 @@ export type ProductColumn = {
   discountPrice?: string;
   category: string;
   featured: boolean;
+  quantity: number;
   imageUrl: string;
 };
 
@@ -45,6 +46,10 @@ export const columns: ColumnDef<ProductColumn>[] = [
         </div>
       );
     },
+  },
+  {
+    accessorKey: "quantity",
+    header: "Quantity",
   },
   {
     accessorKey: "featured",
