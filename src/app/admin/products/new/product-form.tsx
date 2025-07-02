@@ -261,7 +261,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
                       type="number"
                       placeholder="4500.00"
                       {...field}
-                      value={field.value ?? ""}
+                      value={field.value === 0 ? 0 : field.value || ""}
                       onChange={(e) => {
                         const value = e.target.valueAsNumber;
                         field.onChange(isNaN(value) ? null : value);
