@@ -56,8 +56,8 @@ export function ProductDetailModal({ product, categoryName, isOpen, onClose }: P
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-3xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-2">
+      <DialogContent className="sm:max-w-3xl max-h-[90dvh] overflow-y-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <div className="relative aspect-square">
             {isOutOfStock && (
               <div className="absolute inset-0 bg-black/60 z-10 flex items-center justify-center rounded-md">
@@ -73,7 +73,7 @@ export function ProductDetailModal({ product, categoryName, isOpen, onClose }: P
           </div>
           <div className="flex flex-col space-y-4">
             <DialogHeader>
-              <DialogTitle className="text-3xl font-bold">{product.name}</DialogTitle>
+              <DialogTitle className="text-2xl md:text-3xl font-bold">{product.name}</DialogTitle>
               <Badge variant="secondary" className="w-fit">{categoryName}</Badge>
             </DialogHeader>
              
@@ -83,12 +83,12 @@ export function ProductDetailModal({ product, categoryName, isOpen, onClose }: P
                     <p className="text-xl text-muted-foreground line-through">
                         LKR {product.price.toFixed(2)}
                     </p>
-                    <p className="text-3xl font-bold text-primary">
+                    <p className="text-2xl md:text-3xl font-bold text-primary">
                         LKR {product.discountPrice.toFixed(2)}
                     </p>
                 </div>
                 ) : (
-                    <p className="text-3xl font-bold text-primary">
+                    <p className="text-2xl md:text-3xl font-bold text-primary">
                         LKR {product.price.toFixed(2)}
                     </p>
                 )}
@@ -105,7 +105,7 @@ export function ProductDetailModal({ product, categoryName, isOpen, onClose }: P
                 </p>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mt-auto pt-4">
               <div className="flex items-center gap-2">
                   <Label htmlFor="quantity" className="sr-only">Quantity</Label>
                   <Input 
