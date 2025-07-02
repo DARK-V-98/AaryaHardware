@@ -5,14 +5,14 @@ import { useRouter } from 'next/navigation';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, firestore } from '@/lib/firebase';
+import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Droplet } from 'lucide-react';
 
 export default function SignupPage() {
   const [email, setEmail] = useState('');
@@ -39,7 +39,7 @@ export default function SignupPage() {
 
       toast({ title: 'Signup Successful' });
       router.push('/admin');
-    } catch (error: any) {
+    } catch (error: any) => {
       toast({ title: 'Signup Failed', description: error.message, variant: 'destructive' });
     } finally {
       setLoading(false);
@@ -47,15 +47,21 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl">Sign Up</CardTitle>
-          <CardDescription>Create an account to get started</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSignup} className="space-y-4">
-            <div className="space-y-2">
+    <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
+       <div className="flex items-center justify-center py-12">
+        <div className="mx-auto grid w-[350px] gap-6">
+           <div className="grid gap-2 text-center">
+             <Link href="/" className="flex items-center justify-center gap-2 font-bold text-2xl font-headline">
+                <Droplet className="h-7 w-7 text-primary" />
+                Aarya Hardware
+              </Link>
+            <h1 className="text-3xl font-bold mt-4">Sign Up</h1>
+            <p className="text-balance text-muted-foreground">
+              Create an account to get started
+            </p>
+          </div>
+          <form onSubmit={handleSignup} className="grid gap-4">
+            <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -67,30 +73,40 @@ export default function SignupPage() {
                 disabled={loading}
               />
             </div>
-            <div className="space-y-2">
+            <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                required
+              <Input 
+                id="password" 
+                type="password" 
+                required 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={loading}
-              />
+                />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-              Sign Up
+              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Create an account
             </Button>
           </form>
-          <p className="mt-4 text-center text-sm text-muted-foreground">
-            Already have an account?{' '}
-            <Link href="/login" className="underline hover:text-primary">
+          <div className="mt-4 text-center text-sm">
+            Already have an account?{" "}
+            <Link href="/login" className="underline">
               Login
             </Link>
-          </p>
-        </CardContent>
-      </Card>
+          </div>
+        </div>
+      </div>
+       <div className="hidden bg-muted lg:block">
+        <Image
+          src="https://placehold.co/1080x1920.png"
+          alt="Image"
+          width="1920"
+          height="1080"
+          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          data-ai-hint="modern faucet"
+        />
+      </div>
     </div>
   );
 }
