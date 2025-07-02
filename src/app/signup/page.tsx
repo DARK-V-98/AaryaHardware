@@ -40,7 +40,15 @@ export default function SignupPage() {
       toast({ title: 'Signup Successful' });
       router.push('/admin');
     } catch (error: any) {
-      toast({ title: 'Signup Failed', description: error.message, variant: 'destructive' });
+      if (error.code === 'auth/email-already-in-use') {
+        toast({
+          title: 'Signup Failed',
+          description: 'An account with this email already exists. Please use the login page.',
+          variant: 'destructive',
+        });
+      } else {
+        toast({ title: 'Signup Failed', description: error.message, variant: 'destructive' });
+      }
     } finally {
       setLoading(false);
     }
