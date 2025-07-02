@@ -20,7 +20,7 @@ interface OrderConfirmationPageProps {
   };
 }
 
-export default function OrderConfirmationPage({ params: { orderId } }: OrderConfirmationPageProps) {
+export default function OrderConfirmationPage({ params }: OrderConfirmationPageProps) {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -28,7 +28,7 @@ export default function OrderConfirmationPage({ params: { orderId } }: OrderConf
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const docRef = doc(firestore, 'orders', orderId);
+        const docRef = doc(firestore, 'orders', params.orderId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setOrder({ id: docSnap.id, ...docSnap.data() } as Order);
@@ -40,7 +40,7 @@ export default function OrderConfirmationPage({ params: { orderId } }: OrderConf
       }
     };
     fetchOrder();
-  }, [orderId]);
+  }, [params.orderId]);
 
   const copyToClipboard = (text: string, field: string) => {
     navigator.clipboard.writeText(text);

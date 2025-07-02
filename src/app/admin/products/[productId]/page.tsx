@@ -14,7 +14,7 @@ interface EditProductPageProps {
   };
 }
 
-export default function EditProductPage({ params: { productId } }: EditProductPageProps) {
+export default function EditProductPage({ params }: EditProductPageProps) {
   const [product, setProduct] = useState<Product | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ export default function EditProductPage({ params: { productId } }: EditProductPa
         setCategories(cats);
 
         // Fetch product
-        const docRef = doc(firestore, 'products', productId);
+        const docRef = doc(firestore, 'products', params.productId);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -47,7 +47,7 @@ export default function EditProductPage({ params: { productId } }: EditProductPa
     };
     
     fetchData();
-  }, [productId]);
+  }, [params.productId]);
 
   if (loading) {
     return (

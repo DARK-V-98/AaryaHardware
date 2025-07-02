@@ -19,12 +19,12 @@ interface OrderPageProps {
   };
 }
 
-export default function OrderPage({ params: { orderId } }: OrderPageProps) {
+export default function OrderPage({ params }: OrderPageProps) {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const docRef = doc(firestore, 'orders', orderId);
+    const docRef = doc(firestore, 'orders', params.orderId);
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         setOrder({ id: docSnap.id, ...docSnap.data() } as Order);
@@ -38,7 +38,7 @@ export default function OrderPage({ params: { orderId } }: OrderPageProps) {
     });
 
     return () => unsubscribe();
-  }, [orderId]);
+  }, [params.orderId]);
 
   if (loading) {
     return (

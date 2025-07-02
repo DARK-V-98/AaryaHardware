@@ -14,7 +14,7 @@ interface EditCategoryPageProps {
   };
 }
 
-export default function EditCategoryPage({ params: { categoryId } }: EditCategoryPageProps) {
+export default function EditCategoryPage({ params }: EditCategoryPageProps) {
   const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -22,7 +22,7 @@ export default function EditCategoryPage({ params: { categoryId } }: EditCategor
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const docRef = doc(firestore, 'categories', categoryId);
+        const docRef = doc(firestore, 'categories', params.categoryId);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -40,7 +40,7 @@ export default function EditCategoryPage({ params: { categoryId } }: EditCategor
     };
     
     fetchCategory();
-  }, [categoryId]);
+  }, [params.categoryId]);
 
   if (loading) {
     return (
