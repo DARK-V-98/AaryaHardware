@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode, useMemo } from 'react';
 import { Product } from '@/lib/data';
 import { useToast } from '@/hooks/use-toast';
 
@@ -17,6 +17,7 @@ interface CartContextType {
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
   cartCount: number;
+  subtotal: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -43,6 +44,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const addToCart = (product: Product, quantity: number) => {
     const existingItem = cartItems.find(item => item.product.id === product.id);
+    let toastTitle = 'Item added to cart';
+    let toastDescription = `${quantity} x ${product.name} added.`;
 
     if (existingItem) {
         const newQuantity = existingItem.quantity + quantity;
@@ -50,6 +53,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             toast({ title: 'Not enough stock', description: `Cannot add more than ${product.quantity} items to the cart.`, variant: 'destructive' });
             return;
         }
+        toastDescription = `${product.name} quantity updated.`;
     } else {
         if (product.quantity < quantity) {
             toast({ title: 'Not enough stock', description: `Only ${product.quantity} items available.`, variant: 'destructive' });
@@ -67,12 +71,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         return [...prevItems, { product, quantity }];
       }
     });
-
-    if (existingItem) {
-        toast({ title: 'Item added to cart', description: `${product.name} quantity updated.` });
-    } else {
-        toast({ title: 'Item added to cart', description: `${quantity} x ${product.name} added.` });
-    }
+    
+    toast({ title: toastTitle, description: toastDescription });
   };
 
   const removeFromCart = (productId: string) => {
@@ -85,30 +85,33 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     
     if (itemToUpdate && quantity > itemToUpdate.product.quantity) {
         toast({ title: 'Not enough stock', description: `Only ${itemToUpdate.product.quantity} items available.`, variant: 'destructive' });
-        return; // Prevent update
+        return;
     }
 
-    setCartItems(prevItems =>
-      prevItems.map(item => {
-        if (item.product.id === productId) {
-          if (quantity <= 0) {
-            return null;
-          }
-          return { ...item, quantity };
+    setCartItems(prevItems => {
+        if (quantity <= 0) {
+            return prevItems.filter(item => item.product.id !== productId);
         }
-        return item;
-      }).filter(Boolean) as CartItem[]
-    );
+        return prevItems.map(item =>
+            item.product.id === productId ? { ...item, quantity } : item
+        );
+    });
   };
   
   const clearCart = () => {
     setCartItems([]);
   };
 
-  const cartCount = cartItems.reduce((count, item) => count + item.quantity, 0);
+  const cartCount = useMemo(() => cartItems.reduce((count, item) => count + item.quantity, 0), [cartItems]);
+  
+  const subtotal = useMemo(() => cartItems.reduce((acc, item) => {
+    const price = item.product.discountPrice ?? item.product.price;
+    return acc + price * item.quantity;
+  }, 0), [cartItems]);
+
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart, cartCount }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart, cartCount, subtotal }}>
       {children}
     </CartContext.Provider>
   );

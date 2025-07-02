@@ -17,15 +17,12 @@ import { ShoppingCart, Trash2 } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import Image from "next/image";
 import { Input } from "./ui/input";
+import { useRouter } from "next/navigation";
 
 export function CartDrawer() {
-  const { cartItems, cartCount, removeFromCart, updateQuantity } = useCart();
+  const { cartItems, cartCount, removeFromCart, updateQuantity, subtotal } = useCart();
+  const router = useRouter();
   
-  const subtotal = cartItems.reduce((acc, item) => {
-    const price = item.product.discountPrice ?? item.product.price;
-    return acc + price * item.quantity;
-  }, 0);
-
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -84,7 +81,9 @@ export function CartDrawer() {
                         <span>LKR {subtotal.toFixed(2)}</span>
                     </div>
                     <SheetClose asChild>
-                        <Button className="w-full">Proceed to Checkout</Button>
+                        <Button className="w-full" onClick={() => router.push('/checkout')}>
+                            Proceed to Checkout
+                        </Button>
                     </SheetClose>
                 </div>
             </SheetFooter>

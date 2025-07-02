@@ -21,7 +21,38 @@ export type Category = {
   updatedAt?: any;
 };
 
+export type OrderItem = {
+  productId: string;
+  name: string;
+  price: number;
+  quantity: number;
+  imageUrl: string;
+};
 
-// Products are now fetched from Firestore.
-// This file is kept for the type definition.
+export type ShippingAddress = {
+    name: string;
+    addressLine1: string;
+    addressLine2?: string;
+    city: string;
+    postalCode: string;
+    phone: string;
+    email: string;
+};
+
+export type OrderStatus = 'Pending Payment' | 'Processing' | 'Shipped' | 'Completed' | 'Cancelled';
+
+export type Order = {
+  id: string;
+  userId?: string | null;
+  items: OrderItem[];
+  totalAmount: number;
+  status: OrderStatus;
+  shippingAddress: ShippingAddress;
+  createdAt: any;
+  updatedAt: any;
+};
+
+
+// Data is now fetched from Firestore.
+// This file is kept for the type definitions.
 export const products: Product[] = [];

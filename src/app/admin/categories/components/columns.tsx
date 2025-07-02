@@ -3,7 +3,6 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
-import { format } from 'date-fns';
 
 export type CategoryColumn = {
   id: string;
