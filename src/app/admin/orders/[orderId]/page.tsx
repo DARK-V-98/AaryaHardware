@@ -19,10 +19,9 @@ interface OrderPageProps {
   };
 }
 
-export default function OrderPage({ params }: OrderPageProps) {
+export default function OrderPage({ params: { orderId } }: OrderPageProps) {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
-  const { orderId } = params;
 
   useEffect(() => {
     const docRef = doc(firestore, 'orders', orderId);

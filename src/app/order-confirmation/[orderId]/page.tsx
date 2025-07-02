@@ -20,11 +20,10 @@ interface OrderConfirmationPageProps {
   };
 }
 
-export default function OrderConfirmationPage({ params }: OrderConfirmationPageProps) {
+export default function OrderConfirmationPage({ params: { orderId } }: OrderConfirmationPageProps) {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
-  const { orderId } = params;
 
   useEffect(() => {
     const fetchOrder = async () => {

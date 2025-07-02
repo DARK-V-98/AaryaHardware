@@ -14,12 +14,11 @@ interface EditProductPageProps {
   };
 }
 
-export default function EditProductPage({ params }: EditProductPageProps) {
+export default function EditProductPage({ params: { productId } }: EditProductPageProps) {
   const [product, setProduct] = useState<Product | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const { productId } = params;
 
   useEffect(() => {
     const fetchData = async () => {

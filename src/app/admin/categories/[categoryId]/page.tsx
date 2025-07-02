@@ -14,11 +14,10 @@ interface EditCategoryPageProps {
   };
 }
 
-export default function EditCategoryPage({ params }: EditCategoryPageProps) {
+export default function EditCategoryPage({ params: { categoryId } }: EditCategoryPageProps) {
   const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const { categoryId } = params;
 
   useEffect(() => {
     const fetchCategory = async () => {
