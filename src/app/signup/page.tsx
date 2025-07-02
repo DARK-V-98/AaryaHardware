@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -39,7 +40,7 @@ export default function SignupPage() {
 
       toast({ title: 'Signup Successful' });
       router.push('/admin');
-    } catch (error: any) => {
+    } catch (error: any) {
       toast({ title: 'Signup Failed', description: error.message, variant: 'destructive' });
     } finally {
       setLoading(false);
@@ -49,7 +50,7 @@ export default function SignupPage() {
   return (
     <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
        <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
+        <div className="mx-auto grid w-full max-w-[350px] gap-6">
            <div className="grid gap-2 text-center">
              <Link href="/" className="flex items-center justify-center gap-2 font-bold text-2xl font-headline">
                 <Droplet className="h-7 w-7 text-primary" />
