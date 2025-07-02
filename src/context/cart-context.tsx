@@ -42,28 +42,37 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, [cartItems]);
 
   const addToCart = (product: Product, quantity: number) => {
-    if (product.quantity < quantity) {
-        toast({ title: 'Not enough stock', description: `Only ${product.quantity} items available.`, variant: 'destructive' });
-        return;
-    }
+    const existingItem = cartItems.find(item => item.product.id === product.id);
 
-    setCartItems(prevItems => {
-      const existingItem = prevItems.find(item => item.product.id === product.id);
-      if (existingItem) {
+    if (existingItem) {
         const newQuantity = existingItem.quantity + quantity;
         if (product.quantity < newQuantity) {
             toast({ title: 'Not enough stock', description: `Cannot add more than ${product.quantity} items to the cart.`, variant: 'destructive' });
-            return prevItems;
+            return;
         }
-        toast({ title: 'Item added to cart', description: `${product.name} quantity updated.` });
+    } else {
+        if (product.quantity < quantity) {
+            toast({ title: 'Not enough stock', description: `Only ${product.quantity} items available.`, variant: 'destructive' });
+            return;
+        }
+    }
+
+    setCartItems(prevItems => {
+      const itemInCart = prevItems.find(item => item.product.id === product.id);
+      if (itemInCart) {
         return prevItems.map(item =>
-          item.product.id === product.id ? { ...item, quantity: newQuantity } : item
+          item.product.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
         );
       } else {
-        toast({ title: 'Item added to cart', description: `${quantity} x ${product.name} added.` });
         return [...prevItems, { product, quantity }];
       }
     });
+
+    if (existingItem) {
+        toast({ title: 'Item added to cart', description: `${product.name} quantity updated.` });
+    } else {
+        toast({ title: 'Item added to cart', description: `${quantity} x ${product.name} added.` });
+    }
   };
 
   const removeFromCart = (productId: string) => {
@@ -72,16 +81,19 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateQuantity = (productId: string, quantity: number) => {
+    const itemToUpdate = cartItems.find(item => item.product.id === productId);
+    
+    if (itemToUpdate && quantity > itemToUpdate.product.quantity) {
+        toast({ title: 'Not enough stock', description: `Only ${itemToUpdate.product.quantity} items available.`, variant: 'destructive' });
+        return; // Prevent update
+    }
+
     setCartItems(prevItems =>
       prevItems.map(item => {
         if (item.product.id === productId) {
           if (quantity <= 0) {
             return null;
           }
-           if (item.product.quantity < quantity) {
-                toast({ title: 'Not enough stock', description: `Only ${item.product.quantity} items available.`, variant: 'destructive' });
-                return item;
-            }
           return { ...item, quantity };
         }
         return item;
