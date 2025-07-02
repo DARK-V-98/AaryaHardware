@@ -19,6 +19,7 @@ export default function EditProductPage({ params }: EditProductPageProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const { productId } = params;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +30,7 @@ export default function EditProductPage({ params }: EditProductPageProps) {
         setCategories(cats);
 
         // Fetch product
-        const docRef = doc(firestore, 'products', params.productId);
+        const docRef = doc(firestore, 'products', productId);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -47,7 +48,7 @@ export default function EditProductPage({ params }: EditProductPageProps) {
     };
     
     fetchData();
-  }, [params.productId]);
+  }, [productId]);
 
   if (loading) {
     return (
