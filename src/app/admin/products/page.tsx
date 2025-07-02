@@ -12,27 +12,28 @@ import { Loader2 } from 'lucide-react';
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [productsLoading, setProductsLoading] = useState(true);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
 
   useEffect(() => {
     const productsQuery = query(collection(firestore, 'products'), orderBy('createdAt', 'desc'));
     const productsUnsubscribe = onSnapshot(productsQuery, (querySnapshot) => {
       const prods: Product[] = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
       setProducts(prods);
-      if (categories.length > 0) setLoading(false);
+      setProductsLoading(false);
     }, (error) => {
       console.error("Error fetching products: ", error);
-      setLoading(false);
+      setProductsLoading(false);
     });
 
     const categoriesQuery = query(collection(firestore, 'categories'));
     const categoriesUnsubscribe = onSnapshot(categoriesQuery, (querySnapshot) => {
       const cats: Category[] = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Category));
       setCategories(cats);
-      if (products.length > 0 || querySnapshot.empty) setLoading(false);
+      setCategoriesLoading(false);
     }, (error) => {
       console.error("Error fetching categories: ", error);
-      setLoading(false);
+      setCategoriesLoading(false);
     });
 
     return () => {
@@ -40,6 +41,8 @@ export default function ProductsPage() {
       categoriesUnsubscribe();
     };
   }, []);
+  
+  const loading = productsLoading || categoriesLoading;
 
   if (loading) {
     return (
