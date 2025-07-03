@@ -11,6 +11,17 @@ const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 );
 
+const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 24 24" 
+        fill="currentColor"
+        {...props}
+    >
+        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-2.43.05-4.84-.95-6.43-2.8-1.59-1.87-2.16-4.2-1.8-6.45.36-2.25 1.98-4.15 4.1-4.75.14-.04.28-.09.42-.12.1-.02.2-.05.3-.07.03-.01.07-.01.1-.02h.01c.02.01.04.01.06.01.2.02.4.03.6.04 1.1.06 2.21.16 3.29.31.01-.01.02-.02.03-.03v-4.68c-.81-.23-1.62-.4-2.4-.56-1.15-.24-2.26-.56-3.32-1.03-1.06-.48-2.04-1.13-2.8-2-.84-.96-1.31-2.12-1.29-3.35.02-1.22.49-2.38 1.3-3.31 1.25-1.44 3.06-2.34 4.96-2.34 1.79 0 3.51.78 4.74 2.05.13.13.25.26.37.4.24-.13.47-.26.7-.39.29-.16.59-.3.9-.42.29-.11.59-.2.88-.29z"/>
+    </svg>
+);
+
 
 export function Footer() {
   const whatsappUrl = `https://wa.me/c/94782404099`;
@@ -34,6 +45,10 @@ export function Footer() {
               <a href="https://www.instagram.com/Aaryahardware2019" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                   <Instagram className="h-5 w-5" />
                   <span className="sr-only">Instagram</span>
+              </a>
+              <a href="https://www.tiktok.com/@aaryahardware.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                  <TikTokIcon className="h-5 w-5" />
+                  <span className="sr-only">TikTok</span>
               </a>
               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                   <WhatsAppIcon className="h-5 w-5" />
