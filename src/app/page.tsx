@@ -64,7 +64,7 @@ export default function Home() {
               Elegance in Every Detail
             </h1>
             <p className="text-lg md:text-xl max-w-2xl mx-auto text-muted-foreground mt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
-              Discover our premium collection of hardware that combines modern design with timeless quality.
+              Discover our collection of hardware that combines modern design with timeless quality.
             </p>
             <div className="animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-400">
               <Button size="lg" className="mt-8" asChild>
