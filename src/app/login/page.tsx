@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, User } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, firestore } from '@/lib/firebase';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,13 +21,32 @@ export default function LoginPage() {
   const router = useRouter();
   const { toast } = useToast();
 
+  const handleSuccessfulLogin = async (user: User) => {
+    const userDocRef = doc(firestore, 'users', user.uid);
+    const docSnap = await getDoc(userDocRef);
+    let userRole = 'customer'; // Default to customer
+
+    if (docSnap.exists()) {
+        userRole = docSnap.data().role;
+    } else {
+        // This case handles first-time Google sign-ins, ensure a user doc is created
+        await setDoc(userDocRef, { email: user.email, role: 'customer' });
+    }
+
+    toast({ title: 'Login Successful' });
+    if (userRole === 'admin') {
+        router.push('/admin');
+    } else {
+        router.push('/');
+    }
+  }
+
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      toast({ title: 'Login Successful' });
-      router.push('/admin');
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      await handleSuccessfulLogin(userCredential.user);
     } catch (error: any) {
       toast({ title: 'Login Failed', description: error.message, variant: 'destructive' });
     } finally {
@@ -38,9 +58,8 @@ export default function LoginPage() {
     setLoading(true);
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
-      toast({ title: 'Login Successful' });
-      router.push('/admin');
+      const result = await signInWithPopup(auth, provider);
+      await handleSuccessfulLogin(result.user);
     } catch (error: any) {
       toast({ title: 'Login Failed', description: error.message, variant: 'destructive' });
     } finally {

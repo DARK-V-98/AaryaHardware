@@ -38,7 +38,7 @@ export default function SignupPage() {
       });
 
       toast({ title: 'Signup Successful' });
-      router.push('/admin');
+      router.push('/');
     } catch (error: any) {
       if (error.code === 'auth/email-already-in-use') {
         toast({
