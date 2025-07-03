@@ -15,7 +15,7 @@ const fontSans = Inter({
 // SEO Optimized Metadata
 export const metadata: Metadata = {
   // The base URL for the site
-  metadataBase: new URL('https://aarya-bathware.firebaseapp.com'),
+  metadataBase: new URL('https://www.aaryahardware.lk'),
   
   // Title template for dynamic titles
   title: {
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Aarya Bathware & Hardware | Quality Fixtures in Sri Lanka',
     description: 'Your trusted source for premium bathware and quality hardware in Sri Lanka.',
-    url: 'https://aarya-bathware.firebaseapp.com',
+    url: 'https://www.aaryahardware.lk',
     siteName: 'Aarya Bathware',
     images: [
       {

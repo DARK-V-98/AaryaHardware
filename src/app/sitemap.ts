@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next'
  
 // This file generates the sitemap.xml for the website.
 // Next.js automatically serves it at the /sitemap.xml route.
-const URL = 'https://aarya-bathware.firebaseapp.com';
+const URL = 'https://www.aaryahardware.lk';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   
