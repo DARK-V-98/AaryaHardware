@@ -27,12 +27,7 @@ export default function RootLayout({
       <head>
       </head>
       <body className={cn("antialiased font-sans", fontSans.variable)}>
-        <div 
-            className="fixed inset-0 -z-20 h-full w-full bg-cover bg-center bg-fixed" 
-            style={{ backgroundImage: "url('/169.jpg')" }} 
-        />
-        <div className="fixed inset-0 -z-10 h-full w-full bg-white/60 backdrop-blur-xl" />
-        <div className="min-h-screen flex flex-col bg-transparent">
+        <div className="min-h-screen flex flex-col bg-background">
           <AuthProvider>
             <CartProvider>
               {children}

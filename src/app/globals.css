@@ -62,16 +62,10 @@
     @apply border-border;
   }
   body {
-    @apply bg-transparent text-foreground;
+    @apply bg-background text-foreground;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-headline;
   }
-}
-
-@layer utilities {
-    .glass-effect {
-        @apply bg-white/60 backdrop-blur-lg border border-white/30 rounded-lg shadow-xl;
-    }
 }
