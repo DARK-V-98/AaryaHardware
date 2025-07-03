@@ -39,8 +39,8 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
       </head>
-      <body className={cn("antialiased font-sans text-shadow-sm", fontSans.variable, fontHeadline.variable, fontSinhala.variable)}>
-        <div className="bg-background/50 min-h-screen">
+      <body className={cn("antialiased font-sans", fontSans.variable, fontHeadline.variable, fontSinhala.variable)}>
+        <div className="min-h-screen">
           <AuthProvider>
             <CartProvider>
               {children}
