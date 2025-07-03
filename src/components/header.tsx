@@ -138,7 +138,7 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="right">
                 <div className="p-4">
-                  <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-8">
+                  <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-8 font-headline">
                     <Image src="/ar.jpg" alt="Aarya Hardware Logo" width={32} height={32} className="rounded-full" />
                     Aarya Hardware
                   </Link>

@@ -56,13 +56,13 @@ export default function SignupPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
-     <div className="mx-auto grid w-full max-w-[350px] gap-6">
+     <div className="w-full max-w-md space-y-8">
         <div className="grid gap-2 text-center">
-          <Link href="/" className="flex items-center justify-center gap-2 font-bold text-2xl font-headline">
+          <Link href="/" className="flex items-center justify-center gap-2 text-2xl font-bold font-headline">
              <Image src="/ar.jpg" alt="Aarya Hardware Logo" width={40} height={40} className="rounded-full" />
              Aarya Hardware
            </Link>
-         <h1 className="text-3xl font-bold mt-4">Sign Up</h1>
+         <h1 className="text-3xl font-bold mt-4 font-headline">Sign Up</h1>
          <p className="text-balance text-muted-foreground">
            Create an account to get started
          </p>

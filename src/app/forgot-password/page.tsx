@@ -45,13 +45,13 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-6">
-      <div className="mx-auto grid w-full max-w-sm gap-6">
+      <div className="w-full max-w-md space-y-8">
          <div className="grid gap-2 text-center">
-            <Link href="/" className="flex items-center justify-center gap-2 font-bold text-2xl font-headline">
+            <Link href="/" className="flex items-center justify-center gap-2 text-2xl font-bold font-headline">
                 <Image src="/ar.jpg" alt="Aarya Hardware Logo" width={40} height={40} className="rounded-full" />
                 Aarya Hardware
             </Link>
-          <h1 className="text-3xl font-bold mt-4">Reset Password</h1>
+          <h1 className="text-3xl font-bold mt-4 font-headline">Reset Password</h1>
           <p className="text-balance text-muted-foreground">
             Enter your email to receive a reset link.
           </p>
