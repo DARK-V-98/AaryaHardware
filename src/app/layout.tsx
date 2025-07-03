@@ -1,6 +1,6 @@
 
 import type { Metadata } from 'next';
-import { Inter, Lexend } from 'next/font/google';
+import { Inter, Lexend, Noto_Sans_Sinhala } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from '@/context/auth-context';
@@ -15,6 +15,12 @@ const fontSans = Inter({
 const fontHeadline = Lexend({
   subsets: ['latin'],
   variable: '--font-headline',
+  weight: ['400', '700'],
+});
+
+const fontSinhala = Noto_Sans_Sinhala({
+  subsets: ['sinhala'],
+  variable: '--font-sinhala',
   weight: ['400', '700'],
 });
 
@@ -33,7 +39,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
       </head>
-      <body className={cn("antialiased font-sans", fontSans.variable, fontHeadline.variable)}>
+      <body className={cn("antialiased font-sans", fontSans.variable, fontHeadline.variable, fontSinhala.variable)}>
         <AuthProvider>
           <CartProvider>
             {children}

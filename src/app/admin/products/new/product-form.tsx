@@ -30,20 +30,24 @@ import { Product, Category } from "@/lib/data";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes, deleteObject } from "firebase/storage";
 import { firestore, storage } from "@/lib/firebase";
-import { Loader2 } from "lucide-react";
+import { Loader2, Trash2, X } from "lucide-react";
 import Image from "next/image";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
+  name_si: z.string().optional(),
   description: z.string().min(1, "Description is required"),
+  description_si: z.string().optional(),
   price: z.coerce.number().min(0),
   discountPrice: z.coerce.number().nullable().optional(),
   quantity: z.coerce.number().min(0, "Quantity must be 0 or more."),
   image: z.any().refine(files => {
+    // Required only for new products
     return files?.[0] ? true : false;
   }, 'Image is required.').or(z.string()),
+  additionalImages: z.any().optional(),
   categoryId: z.string().min(1, "Category is required"),
   featured: z.boolean().default(false),
   imageHint: z.string().min(1, "Image hint is required"),
@@ -70,6 +74,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(initialData?.imageUrl || null);
+  const [additionalImagePreviews, setAdditionalImagePreviews] = useState<string[]>(initialData?.additionalImageUrls || []);
+  const [imagesToRemove, setImagesToRemove] = useState<string[]>([]);
 
   const title = initialData ? "Edit Product" : "Create Product";
   const description = initialData ? "Edit an existing product." : "Add a new product to your store";
@@ -84,15 +90,19 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
       price: Number(initialData.price), 
       discountPrice: initialData.discountPrice ? Number(initialData.discountPrice) : null,
       quantity: Number(initialData.quantity),
-      image: initialData.imageUrl 
+      image: initialData.imageUrl,
+      additionalImages: []
     } : 
     {
       name: "",
+      name_si: "",
       description: "",
+      description_si: "",
       price: 0,
       discountPrice: null,
       quantity: 1,
-      image: "",
+      image: undefined,
+      additionalImages: undefined,
       categoryId: "",
       featured: false,
       imageHint: "",
@@ -103,44 +113,82 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
+      reader.onloadend = () => setImagePreview(reader.result as string);
       reader.readAsDataURL(file);
       form.setValue("image", e.target.files);
     }
   };
 
+  const handleAdditionalImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      const currentPreviews = [...additionalImagePreviews];
+      for (const file of Array.from(files)) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          if (!currentPreviews.includes(reader.result as string)) {
+             currentPreviews.push(reader.result as string);
+             setAdditionalImagePreviews([...currentPreviews]);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+      form.setValue("additionalImages", files);
+    }
+  };
+
+  const handleRemoveImage = (urlToRemove: string) => {
+    setImagesToRemove(prev => [...prev, urlToRemove]);
+    setAdditionalImagePreviews(prev => prev.filter(url => url !== urlToRemove));
+  };
+
+
   const onSubmit = async (data: ProductFormValues) => {
     try {
       setLoading(true);
-      let imageUrl = initialData?.imageUrl || "";
 
+      // 1. Delete images marked for removal
+      for (const url of imagesToRemove) {
+        const imageRef = ref(storage, url);
+        await deleteObject(imageRef).catch(err => console.error("Failed to delete removed image:", err));
+      }
+
+      // 2. Upload new primary image if provided
+      let imageUrl = initialData?.imageUrl || "";
       if (data.image && typeof data.image !== 'string') {
         const file = data.image[0];
         const storageRef = ref(storage, `products/${Date.now()}_${file.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, file);
-
-        await new Promise<void>((resolve, reject) => {
-          uploadTask.on(
-            "state_changed",
-            null,
-            (error) => reject(error),
-            async () => {
-              imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
-              resolve();
-            }
-          );
-        });
+        const snapshot = await uploadBytes(storageRef, file);
+        imageUrl = await getDownloadURL(snapshot.ref);
       }
+
+      // 3. Upload new additional images
+      const newAdditionalUrls: string[] = [];
+      if (data.additionalImages && data.additionalImages.length > 0) {
+        for (const file of Array.from(data.additionalImages)) {
+            const storageRef = ref(storage, `products/${Date.now()}_additional_${file.name}`);
+            const snapshot = await uploadBytes(storageRef, file);
+            const downloadUrl = await getDownloadURL(snapshot.ref);
+            newAdditionalUrls.push(downloadUrl);
+        }
+      }
+
+      // 4. Construct final list of additional image URLs
+      const finalAdditionalUrls = [
+        ...(initialData?.additionalImageUrls || []).filter(url => !imagesToRemove.includes(url)),
+        ...newAdditionalUrls
+      ];
 
       const productData = {
         name: data.name,
+        name_si: data.name_si || "",
         description: data.description,
+        description_si: data.description_si || "",
         price: data.price,
         discountPrice: data.discountPrice || null,
         quantity: data.quantity,
         imageUrl,
+        additionalImageUrls: finalAdditionalUrls,
         categoryId: data.categoryId,
         featured: data.featured,
         imageHint: data.imageHint,
@@ -186,47 +234,76 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
-           <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Product Image</FormLabel>
-                   {imagePreview && (
-                    <div className="relative w-48 h-48 my-4">
-                      <Image
-                        src={imagePreview}
-                        alt="Image Preview"
-                        fill
-                        className="rounded-md object-cover"
-                      />
+            <div className="space-y-4">
+                <FormLabel>Product Images</FormLabel>
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                     <div className="space-y-2">
+                        <FormLabel className="text-sm text-muted-foreground">Primary Image</FormLabel>
+                        <div className="relative w-full h-32 rounded-md border flex items-center justify-center">
+                            {imagePreview ? (
+                                <Image src={imagePreview} alt="Primary preview" fill className="object-cover rounded-md"/>
+                            ) : (
+                                <span className="text-xs text-muted-foreground">No image</span>
+                            )}
+                        </div>
+                         <FormField
+                            control={form.control}
+                            name="image"
+                            render={() => (
+                                <FormItem>
+                                <FormControl>
+                                    <Input type="file" accept="image/*" onChange={handleImageChange} disabled={loading} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                            />
                     </div>
-                  )}
-                  <FormControl>
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      disabled={loading}
+                     {additionalImagePreviews.map((url, index) => (
+                         <div key={index} className="space-y-2">
+                            <FormLabel className="text-sm text-muted-foreground">Additional Image</FormLabel>
+                            <div className="relative w-full h-32 rounded-md border group">
+                                <Image src={url} alt={`Preview ${index + 1}`} fill className="object-cover rounded-md"/>
+                                <Button
+                                    type="button"
+                                    variant="destructive"
+                                    size="icon"
+                                    className="absolute -top-2 -right-2 h-6 w-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                    onClick={() => handleRemoveImage(url)}
+                                    disabled={loading}
+                                >
+                                    <X className="h-4 w-4"/>
+                                </Button>
+                            </div>
+                        </div>
+                     ))}
+                </div>
+                 <FormField
+                    control={form.control}
+                    name="additionalImages"
+                    render={() => (
+                        <FormItem>
+                        <FormLabel>Add More Images</FormLabel>
+                        <FormControl>
+                            <Input type="file" accept="image/*" multiple onChange={handleAdditionalImagesChange} disabled={loading} />
+                        </FormControl>
+                        <FormDescription>You can select multiple files.</FormDescription>
+                        <FormMessage />
+                        </FormItem>
+                    )}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            </div>
+             <Separator />
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Name (English)</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Product name"
-                      {...field}
-                      disabled={loading}
-                    />
+                    <Input placeholder="Product name" {...field} disabled={loading} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -234,17 +311,25 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
             />
             <FormField
               control={form.control}
+              name="name_si"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name (Sinhala)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="නිෂ්පාදනයේ නම" {...field} className="font-sinhala" disabled={loading} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
               name="price"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Price (LKR)</FormLabel>
                   <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="5000.00"
-                      {...field}
-                      disabled={loading}
-                    />
+                    <Input type="number" placeholder="5000.00" {...field} disabled={loading} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -283,16 +368,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
                 <FormItem>
                   <FormLabel>Quantity</FormLabel>
                   <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="10"
-                      {...field}
-                      disabled={loading}
-                    />
+                    <Input type="number" placeholder="10" {...field} disabled={loading}/>
                   </FormControl>
-                  <FormDescription>
-                    Available stock.
-                  </FormDescription>
+                  <FormDescription>Available stock.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -328,31 +406,34 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
                 <FormItem>
                   <FormLabel>Image Hint</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="e.g. 'black faucet'"
-                      {...field}
-                      disabled={loading}
-                    />
+                    <Input placeholder="e.g. 'black faucet'" {...field} disabled={loading}/>
                   </FormControl>
-                   <FormDescription>
-                      AI hint for image replacement (1-2 words).
-                    </FormDescription>
+                   <FormDescription>AI hint for image replacement (1-2 words).</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormField
+             <FormField
                 control={form.control}
                 name="description"
                 render={({ field }) => (
-                    <FormItem className="md:col-span-2 lg:col-span-3">
-                    <FormLabel>Description</FormLabel>
+                    <FormItem className="md:col-span-3">
+                    <FormLabel>Description (English)</FormLabel>
                     <FormControl>
-                        <Textarea
-                        placeholder="A great description for a great product."
-                        {...field}
-                        disabled={loading}
-                        />
+                        <Textarea placeholder="A great description for a great product." {...field} disabled={loading} />
+                    </FormControl>
+                    <FormMessage />
+                    </FormItem>
+                )}
+            />
+             <FormField
+                control={form.control}
+                name="description_si"
+                render={({ field }) => (
+                    <FormItem className="md:col-span-3">
+                    <FormLabel>Description (Sinhala)</FormLabel>
+                    <FormControl>
+                        <Textarea placeholder="විස්තරය මෙහි ඇතුලත් කරන්න." {...field} disabled={loading} className="font-sinhala" />
                     </FormControl>
                     <FormMessage />
                     </FormItem>
@@ -364,19 +445,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                   <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      disabled={loading}
-                    />
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={loading}/>
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormLabel>
-                      Featured
-                    </FormLabel>
-                    <FormDescription>
-                      This product will appear on the home page
-                    </FormDescription>
+                    <FormLabel>Featured</FormLabel>
+                    <FormDescription>This product will appear on the home page</FormDescription>
                   </div>
                 </FormItem>
               )}

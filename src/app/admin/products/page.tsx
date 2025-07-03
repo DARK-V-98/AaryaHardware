@@ -63,6 +63,7 @@ export default function ProductsPage() {
     featured: item.featured,
     quantity: item.quantity,
     imageUrl: item.imageUrl,
+    additionalImageUrls: item.additionalImageUrls,
   }));
 
   return (

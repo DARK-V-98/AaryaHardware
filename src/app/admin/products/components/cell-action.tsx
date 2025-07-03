@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -31,6 +32,18 @@ interface CellActionProps {
   data: ProductColumn;
 }
 
+const deleteImage = async (imageUrl: string) => {
+  if (!imageUrl) return;
+  const imageRef = ref(storage, imageUrl);
+  await deleteObject(imageRef).catch((error) => {
+    // We don't want to throw an error if the object doesn't exist.
+    if (error.code !== 'storage/object-not-found') {
+      console.error("Error deleting image:", error);
+      throw error;
+    }
+  });
+};
+
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
   const { toast } = useToast();
@@ -47,13 +60,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       
       const productDocRef = doc(firestore, 'products', data.id);
       
-      if (data.imageUrl) {
-        const imageRef = ref(storage, data.imageUrl);
-        await deleteObject(imageRef).catch((error) => {
-          if (error.code !== 'storage/object-not-found') {
-            throw error;
-          }
-        });
+      // Delete main image
+      await deleteImage(data.imageUrl);
+
+      // Delete additional images
+      if (data.additionalImageUrls && data.additionalImageUrls.length > 0) {
+        await Promise.all(data.additionalImageUrls.map(url => deleteImage(url)));
       }
 
       await deleteDoc(productDocRef);

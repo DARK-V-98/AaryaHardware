@@ -15,6 +15,7 @@ export type ProductColumn = {
   featured: boolean;
   quantity: number;
   imageUrl: string;
+  additionalImageUrls?: string[];
 };
 
 export const columns: ColumnDef<ProductColumn>[] = [

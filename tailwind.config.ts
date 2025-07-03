@@ -1,3 +1,4 @@
+
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -12,6 +13,7 @@ export default {
       fontFamily: {
         sans: ['var(--font-sans)', 'sans-serif'],
         headline: ['var(--font-headline)', 'sans-serif'],
+        sinhala: ['var(--font-sinhala)', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',

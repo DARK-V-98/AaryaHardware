@@ -2,10 +2,13 @@
 export type Product = {
   id: string;
   name: string;
+  name_si?: string;
   description: string;
+  description_si?: string;
   price: number;
   discountPrice?: number | null;
   imageUrl: string;
+  additionalImageUrls?: string[];
   imageHint: string;
   featured: boolean;
   categoryId: string;
