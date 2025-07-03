@@ -101,7 +101,7 @@ export function ProductDetailModal({ product, categoryName, isOpen, onClose }: P
             <DialogHeader>
               <Badge variant="secondary" className="w-fit mb-2">{categoryName}</Badge>
               <DialogTitle className="text-2xl md:text-3xl font-bold">{product.name}</DialogTitle>
-              {product.name_si && <p className="font-sinhala text-xl font-bold text-muted-foreground">{product.name_si}</p>}
+              {product.name_si && <p className="font-sinhala text-xl font-bold text-foreground">{product.name_si}</p>}
             </DialogHeader>
              
             <div className="flex items-baseline gap-2">
@@ -122,7 +122,7 @@ export function ProductDetailModal({ product, categoryName, isOpen, onClose }: P
             </div>
             
             <DialogDescription asChild>
-              <div className="text-base text-muted-foreground flex-grow flex flex-col space-y-3">
+              <div className="text-base text-foreground flex-grow flex flex-col space-y-3">
                 <p>{product.description}</p>
                 {product.description_si && <p className="font-sinhala">{product.description_si}</p>}
               </div>

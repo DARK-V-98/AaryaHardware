@@ -60,10 +60,10 @@ export default function Home() {
         {/* Hero Section */}
         <section className="w-full py-24 md:py-40 overflow-hidden">
           <div className="container mx-auto px-4 text-center flex flex-col items-center">
-            <h1 className="text-4xl md:text-7xl font-bold font-headline mb-4 max-w-4xl animate-in fade-in slide-in-from-bottom-10 duration-1000 text-white">
+            <h1 className="text-4xl md:text-7xl font-bold font-headline mb-4 max-w-4xl animate-in fade-in slide-in-from-bottom-10 duration-1000 text-shadow">
               Your Trusted Hardware & Bathware Store
             </h1>
-            <p className="text-lg md:text-xl max-w-2xl mx-auto text-white/90 mt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200 text-shadow-sm">
+            <p className="text-lg md:text-xl max-w-2xl mx-auto mt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200 text-shadow-sm">
               Find everything you need for your home improvement projects, from essential hardware to stylish bathware.
             </p>
             <div className="animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-400">
@@ -78,7 +78,7 @@ export default function Home() {
         <section id="products" className="py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="animate-in fade-in duration-500">
-                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-headline">
+                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-headline text-shadow">
                 Featured Products
                 </h2>
             </div>
