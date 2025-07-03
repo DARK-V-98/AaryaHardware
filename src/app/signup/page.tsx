@@ -57,8 +57,8 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-background">
-     <Card className="w-full max-w-md space-y-8 shadow-2xl">
+    <div className="flex items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-transparent">
+     <Card className="w-full max-w-md space-y-8 glass-effect">
         <CardHeader className="text-center">
           <Link href="/" className="flex items-center justify-center gap-2 text-2xl font-bold mb-2">
              <Image src="/ar.jpg" alt="Aarya Bathware Logo" width={40} height={40} className="rounded-full" />

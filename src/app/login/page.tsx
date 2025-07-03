@@ -70,8 +70,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-6 bg-background">
-      <Card className="w-full max-w-md shadow-2xl">
+    <div className="flex min-h-screen items-center justify-center p-6 bg-transparent">
+      <Card className="w-full max-w-md glass-effect">
         <CardHeader className="text-center">
            <Link href="/" className="flex items-center justify-center gap-2 text-2xl font-bold mb-2">
               <Image src="/ar.jpg" alt="Aarya Bathware Logo" width={40} height={40} className="rounded-full" />

@@ -55,27 +55,18 @@ export default function Home() {
 
 
   return (
-    <div className="flex flex-col min-h-dvh bg-background">
+    <div className="flex flex-col min-h-dvh bg-transparent">
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative w-full py-32 md:py-48 flex items-center justify-center text-center text-white overflow-hidden">
-           <div className="absolute inset-0 z-0">
-                <Image
-                    src="/169.jpg"
-                    alt="Elegant bathware background"
-                    fill
-                    className="object-cover"
-                    priority
-                />
-                <div className="absolute inset-0 bg-black/40" />
-            </div>
+           <div className="absolute inset-0 z-0 bg-black/40" />
           <div className="container relative z-10 mx-auto px-4 flex flex-col items-center">
             <h1 className="text-4xl md:text-7xl font-bold font-headline mb-4 max-w-4xl animate-in fade-in slide-in-from-bottom-10 duration-1000">
-              Aarya Bathware
+              Your Trusted Hardware & Bathware Store
             </h1>
             <p className="text-lg md:text-xl max-w-2xl mx-auto mt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
-              Discover elegant bathware and quality hardware for your modern home.
+              Find everything you need for your home improvement projects, from essential hardware to stylish bathware.
             </p>
             <div className="animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-400">
               <Button size="lg" className="mt-8 bg-white/20 border-white/50 border backdrop-blur-sm hover:bg-white/30 text-white" asChild>
@@ -115,13 +106,13 @@ export default function Home() {
         </section>
         
         {/* About Us Section */}
-        <section id="about" className="py-16 md:py-24 bg-white">
+        <section id="about" className="py-16 md:py-24">
           <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div className="glass-effect p-8 md:p-12 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1 animate-in fade-in-0 slide-in-from-left-10 duration-1000">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">About Us</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Aarya Bathware is your reliable source for a wide range of premium bathware and hardware products. We are committed to providing exceptional quality and friendly service to help you with all your home improvement and construction needs. Whether you're a DIY enthusiast or a professional contractor, we have the tools and supplies to bring your vision to life.
+                  Aarya Hardware is your reliable source for a wide range of premium bathware and hardware products. We are committed to providing exceptional quality and friendly service to help you with all your home improvement and construction needs. Whether you're a DIY enthusiast or a professional contractor, we have the tools and supplies to bring your vision to life.
                 </p>
               </div>
               <div className="order-1 md:order-2 animate-in fade-in-0 slide-in-from-right-10 duration-1000">
@@ -143,7 +134,7 @@ export default function Home() {
             <div className="animate-in fade-in-0 duration-500">
                 <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Get In Touch</h2>
             </div>
-            <Card className="max-w-lg mx-auto shadow-xl overflow-hidden">
+            <Card className="glass-effect max-w-lg mx-auto overflow-hidden">
                 <CardContent className="p-8 md:p-12">
                   <div className="text-center space-y-6">
                       <h3 className="text-2xl font-semibold">Our Showroom</h3>

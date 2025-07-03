@@ -69,3 +69,9 @@
     @apply font-headline;
   }
 }
+
+@layer utilities {
+    .glass-effect {
+        @apply bg-white/60 backdrop-blur-lg border border-white/30 rounded-lg shadow-xl;
+    }
+}

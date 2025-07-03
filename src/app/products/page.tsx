@@ -94,7 +94,7 @@ export default function ProductsPage() {
 
 
   return (
-    <div className="flex flex-col min-h-dvh bg-background">
+    <div className="flex flex-col min-h-dvh bg-transparent">
       <Header />
       <main className="flex-1">
         <section className="py-16 md:py-24">
@@ -107,7 +107,7 @@ export default function ProductsPage() {
             </p>
 
             {/* Filter and Sort Controls */}
-            <Card className="mb-8 p-4 shadow-md">
+            <Card className="mb-8 p-4 glass-effect">
               <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
                 <div className="relative w-full md:max-w-sm">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
@@ -159,7 +159,7 @@ export default function ProductsPage() {
                 ))}
               </div>
             ) : (
-                <Card className="text-center py-16 shadow-lg">
+                <Card className="text-center py-16 glass-effect">
                     <h2 className="text-2xl font-semibold">No Products Found</h2>
                     <p className="mt-2 text-muted-foreground">Try adjusting your search or filter criteria.</p>
                 </Card>
