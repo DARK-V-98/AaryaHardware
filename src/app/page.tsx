@@ -56,6 +56,10 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-dvh bg-background">
+      <div
+          className="fixed inset-0 z-[-1] bg-cover bg-center"
+          style={{ backgroundImage: "url('/169.jpg')" }}
+      />
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
@@ -69,7 +73,7 @@ export default function Home() {
               Your Trusted Hardware & Bathware Store
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
-              Find everything you need for your home improvement projects, from essential hardware to stylish bathware.
+              Find everything you need for your home improvement projects in Sri Lanka, from essential hardware to stylish bathware.
             </p>
             <div className="animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-400">
               <Button size="lg" className="mt-8" asChild>
@@ -83,13 +87,13 @@ export default function Home() {
         <section id="products" className="py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="animate-in fade-in duration-500">
-                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">
                   Featured Products
                 </h2>
             </div>
             {loading ? (
               <div className="flex justify-center items-center py-8">
-                <Loader2 className="h-12 w-12 animate-spin" />
+                <Loader2 className="h-12 w-12 animate-spin text-white" />
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -102,7 +106,7 @@ export default function Home() {
                     >
                     <ProductCard 
                       {...product} 
-                      className="bg-white/40 backdrop-blur-lg border border-white/30 shadow-lg"
+                      className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg"
                     />
                   </div>
                 ))}
@@ -112,13 +116,13 @@ export default function Home() {
         </section>
         
         {/* About Us Section */}
-        <section id="about" className="py-16 md:py-24 bg-secondary">
+        <section id="about" className="py-16 md:py-24 bg-white/10 backdrop-blur-lg">
           <div className="container mx-auto px-4">
-            <div className="p-8 md:p-12 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div className="p-8 md:p-12 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center bg-white/10 rounded-lg border border-white/20">
               <div className="order-2 md:order-1 animate-in fade-in-0 slide-in-from-left-10 duration-1000">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">About Us</h2>
-                <p className="text-foreground leading-relaxed">
-                  Aarya Hardware is your reliable source for a wide range of premium bathware and hardware products. We are committed to providing exceptional quality and friendly service to help you with all your home improvement and construction needs. Whether you're a DIY enthusiast or a professional contractor, we have the tools and supplies to bring your vision to life.
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">About Us</h2>
+                <p className="text-white/90 leading-relaxed">
+                  Aarya Hardware is your reliable source in Sri Lanka for a wide range of premium bathware and hardware products. We are committed to providing exceptional quality and friendly service to help you with all your home improvement and construction needs. Whether you're a DIY enthusiast or a professional contractor, we have the tools and supplies to bring your vision to life at our Kottawa hardware store.
                 </p>
               </div>
               <div className="order-1 md:order-2 animate-in fade-in-0 slide-in-from-right-10 duration-1000">
@@ -138,13 +142,13 @@ export default function Home() {
         <section id="contact" className="py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="animate-in fade-in-0 duration-500">
-                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Get In Touch</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Get In Touch</h2>
             </div>
-            <Card className="max-w-lg mx-auto overflow-hidden">
-                <CardContent className="p-8 md:p-12">
+            <Card className="max-w-lg mx-auto overflow-hidden bg-white/10 backdrop-blur-lg border border-white/20">
+                <CardContent className="p-8 md:p-12 text-white">
                   <div className="text-center space-y-6">
                       <h3 className="text-2xl font-semibold">Our Showroom</h3>
-                      <p className="text-muted-foreground">
+                      <p className="text-white/80">
                         Visit us to experience our collection firsthand. Our team is ready to assist you.
                       </p>
                       <div className="space-y-4 inline-block text-left pt-2">
