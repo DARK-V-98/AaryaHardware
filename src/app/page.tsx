@@ -134,7 +134,7 @@ export default function Home() {
             <div className="animate-in fade-in-0 duration-500">
                 <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Get In Touch</h2>
             </div>
-            <Card className="glass-effect max-w-lg mx-auto overflow-hidden">
+            <Card className="max-w-lg mx-auto overflow-hidden">
                 <CardContent className="p-8 md:p-12">
                   <div className="text-center space-y-6">
                       <h3 className="text-2xl font-semibold">Our Showroom</h3>

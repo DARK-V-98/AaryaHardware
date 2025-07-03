@@ -80,7 +80,7 @@ export default function ProductsPage() {
         case 'price-asc':
           return priceA - priceB;
         case 'price-desc':
-          return priceB - priceA;
+          return priceB - a.price;
         case 'date-desc':
         default:
           const dateA = a.createdAt?.toDate ? a.createdAt.toDate().getTime() : 0;
@@ -107,7 +107,7 @@ export default function ProductsPage() {
             </p>
 
             {/* Filter and Sort Controls */}
-            <Card className="mb-8 p-4 glass-effect">
+            <Card className="mb-8 p-4">
               <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
                 <div className="relative w-full md:max-w-sm">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
@@ -159,7 +159,7 @@ export default function ProductsPage() {
                 ))}
               </div>
             ) : (
-                <Card className="text-center py-16 glass-effect">
+                <Card className="text-center py-16">
                     <h2 className="text-2xl font-semibold">No Products Found</h2>
                     <p className="mt-2 text-muted-foreground">Try adjusting your search or filter criteria.</p>
                 </Card>
