@@ -4,13 +4,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Package, Tag, ShoppingCart } from 'lucide-react';
+import { LayoutDashboard, Package, Tag, ShoppingCart, Users } from 'lucide-react';
 
 const navItems = [
     { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
     { href: "/admin/products", label: "Products", icon: Package },
     { href: "/admin/categories", label: "Categories", icon: Tag },
     { href: "/admin/orders", label: "Orders", icon: ShoppingCart },
+    { href: "/admin/users", label: "Users", icon: Users },
   ];
 
 export function AdminNav() {

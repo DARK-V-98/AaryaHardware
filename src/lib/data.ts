@@ -58,6 +58,12 @@ export type Order = {
   updatedAt: any;
 };
 
+export type UserData = {
+  id: string;
+  email: string;
+  role: 'admin' | 'customer';
+};
+
 
 // Data is now fetched from Firestore.
 // This file is kept for the type definitions.
