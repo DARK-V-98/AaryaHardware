@@ -100,7 +100,10 @@ export default function Home() {
                     className="cursor-pointer animate-in fade-in-0 slide-in-from-bottom-5 duration-700 fill-mode-both"
                     style={{ animationDelay: `${150 * index}ms` }}
                     >
-                    <ProductCard {...product} />
+                    <ProductCard 
+                      {...product} 
+                      className="bg-white/40 backdrop-blur-lg border border-white/30 shadow-lg"
+                    />
                   </div>
                 ))}
               </div>

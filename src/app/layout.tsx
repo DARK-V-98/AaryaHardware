@@ -31,14 +31,12 @@ export default function RootLayout({
             className="fixed inset-0 z-[-1] bg-cover bg-center"
             style={{ backgroundImage: "url('/169.jpg')" }}
         />
-        <div className="min-h-screen flex flex-col bg-transparent">
-          <AuthProvider>
-            <CartProvider>
-              {children}
-              <Toaster />
-            </CartProvider>
-          </AuthProvider>
-        </div>
+        <AuthProvider>
+          <CartProvider>
+            {children}
+            <Toaster />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

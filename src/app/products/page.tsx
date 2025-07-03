@@ -94,20 +94,20 @@ export default function ProductsPage() {
 
 
   return (
-    <div className="flex flex-col min-h-dvh bg-transparent">
+    <div className="flex flex-col min-h-dvh bg-background">
       <Header />
       <main className="flex-1">
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4">
-            <h1 className="text-3xl md:text-4xl font-bold text-center mb-6 text-white">
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-6">
               Our Collection
             </h1>
-            <p className="text-center text-white/90 mb-12 max-w-2xl mx-auto">
+            <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
               Browse our curated selection of bathware and hardware. Use the filters below to find exactly what you need.
             </p>
 
             {/* Filter and Sort Controls */}
-            <Card className="mb-8 p-4 bg-white/40 backdrop-blur-lg border border-white/30 shadow-lg">
+            <Card className="mb-8 p-4">
               <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
                 <div className="relative w-full md:max-w-sm">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
@@ -148,7 +148,7 @@ export default function ProductsPage() {
 
              {loading ? (
               <div className="flex justify-center items-center py-8">
-                <Loader2 className="h-12 w-12 animate-spin text-white" />
+                <Loader2 className="h-12 w-12 animate-spin" />
               </div>
             ) : filteredAndSortedProducts.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -159,7 +159,7 @@ export default function ProductsPage() {
                 ))}
               </div>
             ) : (
-                <Card className="text-center py-16 bg-white/40 backdrop-blur-lg border border-white/30 shadow-lg">
+                <Card className="text-center py-16">
                     <h2 className="text-2xl font-semibold">No Products Found</h2>
                     <p className="mt-2 text-muted-foreground">Try adjusting your search or filter criteria.</p>
                 </Card>

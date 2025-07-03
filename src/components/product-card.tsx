@@ -7,12 +7,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Product } from "@/lib/data";
+import { cn } from "@/lib/utils";
 
-export function ProductCard(product: Product) {
+export function ProductCard({ className, ...product }: Product & { className?: string }) {
   const isOutOfStock = product.quantity === 0;
 
   return (
-    <Card className="flex flex-col overflow-hidden group h-full bg-white/40 backdrop-blur-lg border border-white/30 shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <Card className={cn("flex flex-col overflow-hidden group h-full hover:shadow-xl transition-shadow duration-300", className)}>
       <CardHeader className="p-0">
         <div className="aspect-square relative overflow-hidden">
            {isOutOfStock && (
