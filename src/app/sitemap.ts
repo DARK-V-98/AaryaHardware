@@ -1,29 +1,32 @@
 
 import { MetadataRoute } from 'next'
  
+// This file generates the sitemap.xml for the website.
+// Next.js automatically serves it at the /sitemap.xml route.
 const URL = 'https://aarya-bathware.firebaseapp.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   
-  const routes = [
-    '/',
-    '/products',
-    '/login',
-    '/signup',
-    '/forgot-password',
-    '/checkout',
-    '/profile'
-  ];
+  // Define static routes with their SEO properties
+  const staticRoutes = [
+    { url: '/', changeFrequency: 'weekly', priority: 1.0 },
+    { url: '/products', changeFrequency: 'weekly', priority: 0.9 },
+    { url: '/login', changeFrequency: 'yearly', priority: 0.5 },
+    { url: '/signup', changeFrequency: 'yearly', priority: 0.5 },
+    { url: '/forgot-password', changeFrequency: 'yearly', priority: 0.5 },
+    { url: '/checkout', changeFrequency: 'monthly', priority: 0.7 },
+    { url: '/profile', changeFrequency: 'monthly', priority: 0.6 },
+  ] as const;
 
-  const routeEntries: MetadataRoute.Sitemap = routes.map((route) => ({
-    url: `${URL}${route}`,
+  const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
+    url: `${URL}${route.url}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: route === '/' ? 1 : 0.8,
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
   }));
 
-  // In a real application, you would fetch dynamic routes (e.g., product pages) 
-  // from a database and add them to the sitemap here.
+  // For a dynamic application, you would also fetch product and category routes
+  // from your database and add them to the sitemap here.
   
-  return routeEntries;
+  return staticEntries;
 }
