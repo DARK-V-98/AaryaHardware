@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ProductsPage() {
   return (
-    <div className="flex flex-col min-h-dvh bg-white">
+    <div className="flex flex-col min-h-dvh bg-background">
       <Header />
       <main className="flex-1">
         <ProductsClient />
