@@ -30,18 +30,18 @@ export function ProductCard(product: Product) {
         </div>
       </CardHeader>
       <CardContent className="p-4 flex-grow flex flex-col">
-        <CardTitle className="text-lg font-semibold mb-1 flex-grow">{product.name}</CardTitle>
+        <CardTitle className="text-lg font-semibold mb-1 flex-grow text-shadow-sm">{product.name}</CardTitle>
         {product.discountPrice && product.discountPrice > 0 ? (
           <div className="mt-2">
             <p className="text-sm text-muted-foreground line-through">
               LKR {product.price.toFixed(2)}
             </p>
-            <p className="text-lg font-bold text-primary">
+            <p className="text-lg font-bold text-primary text-shadow-sm">
               LKR {product.discountPrice.toFixed(2)}
             </p>
           </div>
         ) : (
-          <p className="text-lg font-bold text-primary mt-2">LKR {product.price.toFixed(2)}</p>
+          <p className="text-lg font-bold text-primary mt-2 text-shadow-sm">LKR {product.price.toFixed(2)}</p>
         )}
       </CardContent>
     </Card>
