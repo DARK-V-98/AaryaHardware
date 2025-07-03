@@ -114,12 +114,11 @@ export default function Home() {
             </div>
              <div className="order-1 md:order-2 animate-in fade-in-0 slide-in-from-right-10 duration-1000">
                 <Image 
-                    src="https://placehold.co/800x600.png"
-                    alt="Interior of a hardware store"
+                    src="/ab.jpg"
+                    alt="Aarya Hardware store interior"
                     width={800}
                     height={600}
                     className="rounded-lg shadow-xl object-cover"
-                    data-ai-hint="hardware store interior"
                 />
             </div>
           </div>
