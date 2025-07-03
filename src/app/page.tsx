@@ -59,7 +59,10 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative w-full py-32 md:py-48 flex items-center justify-center text-center text-white overflow-hidden">
+        <section 
+          className="relative w-full py-32 md:py-48 flex items-center justify-center text-center text-white overflow-hidden bg-cover bg-center"
+          style={{ backgroundImage: "url('/169.jpg')" }}
+        >
            <div className="absolute inset-0 z-0 bg-black/40" />
           <div className="container relative z-10 mx-auto px-4 flex flex-col items-center">
             <h1 className="text-4xl md:text-7xl font-bold font-headline mb-4 max-w-4xl animate-in fade-in slide-in-from-bottom-10 duration-1000">
@@ -108,10 +111,10 @@ export default function Home() {
         {/* About Us Section */}
         <section id="about" className="py-16 md:py-24">
           <div className="container mx-auto px-4">
-            <div className="glass-effect p-8 md:p-12 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div className="p-8 md:p-12 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1 animate-in fade-in-0 slide-in-from-left-10 duration-1000">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">About Us</h2>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-foreground leading-relaxed">
                   Aarya Hardware is your reliable source for a wide range of premium bathware and hardware products. We are committed to providing exceptional quality and friendly service to help you with all your home improvement and construction needs. Whether you're a DIY enthusiast or a professional contractor, we have the tools and supplies to bring your vision to life.
                 </p>
               </div>
