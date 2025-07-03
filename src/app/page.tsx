@@ -108,7 +108,7 @@ export default function Home() {
           <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center glass-effect rounded-lg p-8 md:p-12">
             <div className="order-2 md:order-1 animate-in fade-in-0 slide-in-from-left-10 duration-1000">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">About Aarya Hardware</h2>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-foreground leading-relaxed">
                 Aarya Hardware is your reliable local source for a wide range of hardware and bathware products. We are committed to providing quality items and friendly service to help you with all your home improvement and construction needs. Whether you're a DIY enthusiast or a professional contractor, we have the tools and supplies to get the job done right.
               </p>
             </div>
@@ -133,17 +133,17 @@ export default function Home() {
             <div className="max-w-lg mx-auto glass-effect p-8 md:p-12 rounded-xl shadow-lg animate-in fade-in-0 zoom-in-95 duration-700 delay-200">
                 <div className="text-center space-y-6">
                     <h3 className="text-2xl font-semibold">Our Showroom</h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-foreground">
                     Visit us to experience our collection firsthand. Our team is ready to assist you.
                     </p>
                     <div className="space-y-4 inline-block text-left pt-2">
                         <div className="flex items-start gap-4">
                             <MapPin className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
-                            <p className="text-muted-foreground">Aarya Hardware No. 377 old kottawa road,<br/>kottawa</p>
+                            <p className="text-foreground">Aarya Hardware No. 377 old kottawa road,<br/>kottawa</p>
                         </div>
                         <div className="flex items-center gap-4">
                             <Phone className="h-6 w-6 text-primary flex-shrink-0" />
-                            <p className="text-muted-foreground">+94782404099</p>
+                            <p className="text-foreground">+94782404099</p>
                         </div>
                     </div>
                 </div>
