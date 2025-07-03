@@ -56,7 +56,7 @@ export function ProductDetailModal({ product, categoryName, isOpen, onClose }: P
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-3xl max-h-[90dvh] overflow-y-auto">
+      <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} className="sm:max-w-3xl max-h-[90dvh] overflow-y-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           <div className="relative aspect-square">
             {isOutOfStock && (
