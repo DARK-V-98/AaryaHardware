@@ -55,16 +55,20 @@ export default function Home() {
 
 
   return (
-    <div className="flex flex-col min-h-dvh bg-transparent">
+    <div className="flex flex-col min-h-dvh bg-background">
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-32 md:py-48 flex items-center justify-center text-center bg-secondary">
-          <div className="container mx-auto px-4 flex flex-col items-center">
-            <h1 className="text-4xl md:text-7xl font-bold font-headline mb-4 max-w-4xl animate-in fade-in slide-in-from-bottom-10 duration-1000">
+        <section 
+          className="w-full py-32 md:py-48 flex items-center justify-center text-center relative bg-cover bg-center"
+          style={{ backgroundImage: `url('/ab.jpg')` }}
+        >
+          <div className="absolute inset-0 bg-black/50 z-0" />
+          <div className="container mx-auto px-4 flex flex-col items-center relative z-10">
+            <h1 className="text-4xl md:text-7xl font-bold font-headline mb-4 max-w-4xl text-white animate-in fade-in slide-in-from-bottom-10 duration-1000">
               Your Trusted Hardware & Bathware Store
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
+            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
               Find everything you need for your home improvement projects, from essential hardware to stylish bathware.
             </p>
             <div className="animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-400">
