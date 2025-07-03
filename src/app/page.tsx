@@ -124,7 +124,7 @@ export default function Home() {
               <div className="order-1 md:order-2 animate-in fade-in-0 slide-in-from-right-10 duration-1000">
                   <Image 
                       src="/ab.jpg"
-                      alt="Aarya Bathware store interior"
+                      alt="Aarya Hardware store interior"
                       width={800}
                       height={600}
                       className="rounded-lg shadow-xl object-cover"
