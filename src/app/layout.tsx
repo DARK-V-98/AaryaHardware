@@ -21,7 +21,7 @@ const fontHeadline = Lexend({
 
 export const metadata: Metadata = {
   title: 'Aarya Hardware',
-  description: 'Premium hardware solutions for modern homes.',
+  description: 'Your one-stop shop for quality hardware and bathware items.',
 };
 
 export default function RootLayout({

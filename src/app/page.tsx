@@ -61,10 +61,10 @@ export default function Home() {
         <section className="w-full py-24 md:py-40 bg-background text-foreground overflow-hidden">
           <div className="container mx-auto px-4 text-center flex flex-col items-center">
             <h1 className="text-4xl md:text-7xl font-bold font-headline mb-4 max-w-4xl animate-in fade-in slide-in-from-bottom-10 duration-1000">
-              Elegance in Every Detail
+              Your Trusted Hardware & Bathware Store
             </h1>
             <p className="text-lg md:text-xl max-w-2xl mx-auto text-muted-foreground mt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
-              Discover our collection of hardware that combines modern design with timeless quality.
+              Find everything you need for your home improvement projects, from essential hardware to stylish bathware.
             </p>
             <div className="animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-400">
               <Button size="lg" className="mt-8" asChild>
@@ -109,17 +109,17 @@ export default function Home() {
             <div className="order-2 md:order-1 animate-in fade-in-0 slide-in-from-left-10 duration-1000">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">About Aarya Hardware</h2>
               <p className="text-muted-foreground leading-relaxed">
-                Aarya Hardware is a premier destination for high-quality, design-forward hardware and accessories. We believe that every space should be both functional and beautiful. That's why we meticulously source and curate a collection of products that embody elegance, innovation, and durability. Our mission is to help you create a space that is not only functional but also a true reflection of your personal style.
+                Aarya Hardware is your reliable local source for a wide range of hardware and bathware products. We are committed to providing quality items and friendly service to help you with all your home improvement and construction needs. Whether you're a DIY enthusiast or a professional contractor, we have the tools and supplies to get the job done right.
               </p>
             </div>
              <div className="order-1 md:order-2 animate-in fade-in-0 slide-in-from-right-10 duration-1000">
                 <Image 
                     src="https://placehold.co/800x600.png"
-                    alt="Stylish faucet detail"
+                    alt="Interior of a hardware store"
                     width={800}
                     height={600}
                     className="rounded-lg shadow-xl object-cover"
-                    data-ai-hint="hardware showroom"
+                    data-ai-hint="hardware store interior"
                 />
             </div>
           </div>
