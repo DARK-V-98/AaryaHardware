@@ -50,7 +50,7 @@ export default function ForgotPasswordPage() {
       <Card className="w-full max-w-md shadow-2xl">
          <CardHeader className="text-center">
             <Link href="/" className="flex items-center justify-center gap-2 text-2xl font-bold mb-2">
-                <Image src="/ah.png" alt="Aarya Hardware Logo" width={50} height={50} />
+                <Image src="/ah.png" alt="Aarya Hardware Logo" width={50} height={50} className="rounded-full" />
                 Aarya Hardware
             </Link>
           <CardTitle>Reset Password</CardTitle>
