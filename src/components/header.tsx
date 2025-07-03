@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -26,11 +27,21 @@ import { auth } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { CartDrawer } from "./cart-drawer";
+import { useEffect, useState } from "react";
 
 export function Header() {
   const { user, role, loading } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -45,29 +56,29 @@ export function Header() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/products", label: "Products" },
-    { href: "/#about", label: "About Us" },
+    { href: "/#about", label: "About" },
     { href: "/#contact", label: "Contact" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b glass-effect">
+    <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${isScrolled ? 'bg-white/80 backdrop-blur-lg border-b' : 'bg-transparent'}`}>
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2 font-bold text-lg font-headline text-shadow">
-          <Image src="/ar.jpg" alt="Aarya Hardware Logo" width={32} height={32} className="rounded-full" />
-          Aarya Hardware
+        <Link href="/" className="flex items-center gap-3 font-bold text-lg">
+          <Image src="/ar.jpg" alt="Aarya Bathware Logo" width={40} height={40} className="rounded-full" />
+          <span className={`${isScrolled ? 'text-foreground' : 'text-white'}`}>Aarya Bathware</span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
           {navLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="transition-colors hover:text-primary text-shadow-sm"
+              className={`transition-colors hover:text-primary ${isScrolled ? 'text-foreground' : 'text-white'}`}
             >
               {link.label}
             </Link>
           ))}
            {role === 'admin' && (
-             <Link href="/admin" className="transition-colors hover:text-primary text-shadow-sm">Admin</Link>
+             <Link href="/admin" className={`transition-colors hover:text-primary ${isScrolled ? 'text-foreground' : 'text-white'}`}>Admin</Link>
            )}
         </nav>
         <div className="flex items-center gap-4">
@@ -85,7 +96,7 @@ export function Header() {
                       </Avatar>
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56 glass-effect" align="end" forceMount>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
                     <DropdownMenuLabel className="font-normal">
                       <div className="flex flex-col space-y-1">
                         <p className="text-sm font-medium leading-none">{user.displayName || 'User'}</p>
@@ -119,7 +130,7 @@ export function Header() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <Button asChild variant="ghost" className="hidden md:flex">
+                <Button asChild variant="ghost" className={`hidden md:flex ${isScrolled ? 'text-foreground' : 'text-white'}`}>
                   <Link href="/login">Login</Link>
                 </Button>
               )}
@@ -131,16 +142,16 @@ export function Header() {
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button variant="outline" size="icon" className={`${isScrolled ? '' : 'text-white border-white/50 hover:bg-white/10 hover:text-white'}`}>
                   <Menu className="h-5 w-5" />
                   <span className="sr-only">Open menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="glass-effect">
+              <SheetContent side="right">
                 <div className="p-4">
-                  <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-8 font-headline">
-                    <Image src="/ar.jpg" alt="Aarya Hardware Logo" width={32} height={32} className="rounded-full" />
-                    Aarya Hardware
+                  <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-8">
+                    <Image src="/ar.jpg" alt="Aarya Bathware Logo" width={32} height={32} className="rounded-full" />
+                    Aarya Bathware
                   </Link>
                   <nav className="flex flex-col gap-4">
                     {[...navLinks, ...(role === 'admin' ? [{ href: "/admin", label: "Admin" }] : [])].map((link) => (

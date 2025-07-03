@@ -12,7 +12,7 @@ export function ProductCard(product: Product) {
   const isOutOfStock = product.quantity === 0;
 
   return (
-    <Card className="flex flex-col overflow-hidden rounded-lg shadow-md transition-shadow hover:shadow-xl group h-full">
+    <Card className="flex flex-col overflow-hidden transition-shadow hover:shadow-xl group h-full">
       <CardHeader className="p-0">
         <div className="aspect-square relative overflow-hidden">
            {isOutOfStock && (
@@ -30,18 +30,18 @@ export function ProductCard(product: Product) {
         </div>
       </CardHeader>
       <CardContent className="p-4 flex-grow flex flex-col">
-        <CardTitle className="text-lg font-semibold mb-1 flex-grow text-shadow-sm">{product.name}</CardTitle>
+        <h3 className="text-lg font-semibold mb-1 flex-grow">{product.name}</h3>
         {product.discountPrice && product.discountPrice > 0 ? (
           <div className="mt-2">
             <p className="text-sm text-muted-foreground line-through">
               LKR {product.price.toFixed(2)}
             </p>
-            <p className="text-lg font-bold text-primary text-shadow-sm">
+            <p className="text-lg font-bold text-primary">
               LKR {product.discountPrice.toFixed(2)}
             </p>
           </div>
         ) : (
-          <p className="text-lg font-bold text-primary mt-2 text-shadow-sm">LKR {product.price.toFixed(2)}</p>
+          <p className="text-lg font-bold text-primary mt-2">LKR {product.price.toFixed(2)}</p>
         )}
       </CardContent>
     </Card>

@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
@@ -12,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { firestore } from '@/lib/firebase';
 import { Product, Category } from '@/lib/data';
 import { ProductDetailModal } from '@/components/product-detail-modal';
+import { Card, CardContent } from '@/components/ui/card';
 
 
 export default function Home() {
@@ -53,20 +55,30 @@ export default function Home() {
 
 
   return (
-    <div className="flex flex-col min-h-dvh">
+    <div className="flex flex-col min-h-dvh bg-background">
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-24 md:py-40 overflow-hidden">
-          <div className="container mx-auto px-4 text-center flex flex-col items-center">
-            <h1 className="text-4xl md:text-7xl font-bold font-headline mb-4 max-w-4xl animate-in fade-in slide-in-from-bottom-10 duration-1000 text-shadow text-white">
-              Your Trusted Hardware & Bathware Store
+        <section className="relative w-full py-32 md:py-48 flex items-center justify-center text-center text-white overflow-hidden">
+           <div className="absolute inset-0 z-0">
+                <Image
+                    src="/169.jpg"
+                    alt="Elegant bathware background"
+                    fill
+                    className="object-cover"
+                    priority
+                />
+                <div className="absolute inset-0 bg-black/40" />
+            </div>
+          <div className="container relative z-10 mx-auto px-4 flex flex-col items-center">
+            <h1 className="text-4xl md:text-7xl font-bold font-headline mb-4 max-w-4xl animate-in fade-in slide-in-from-bottom-10 duration-1000">
+              Aarya Bathware
             </h1>
-            <p className="text-lg md:text-xl max-w-2xl mx-auto mt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200 text-shadow-sm text-white">
-              Find everything you need for your home improvement projects, from essential hardware to stylish bathware.
+            <p className="text-lg md:text-xl max-w-2xl mx-auto mt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
+              Discover elegant bathware and quality hardware for your modern home.
             </p>
             <div className="animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-400">
-              <Button size="lg" className="mt-8" asChild>
+              <Button size="lg" className="mt-8 bg-white/20 border-white/50 border backdrop-blur-sm hover:bg-white/30 text-white" asChild>
                 <a href="/products">Shop Collection</a>
               </Button>
             </div>
@@ -77,8 +89,8 @@ export default function Home() {
         <section id="products" className="py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="animate-in fade-in duration-500">
-                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-headline text-shadow">
-                Featured Products
+                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+                  Featured Products
                 </h2>
             </div>
             {loading ? (
@@ -103,22 +115,24 @@ export default function Home() {
         </section>
         
         {/* About Us Section */}
-        <section id="about" className="py-16 md:py-24">
-          <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center glass-effect rounded-lg p-8 md:p-12">
-            <div className="order-2 md:order-1 animate-in fade-in-0 slide-in-from-left-10 duration-1000">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">About Aarya Hardware</h2>
-              <p className="text-foreground leading-relaxed">
-                Aarya Hardware is your reliable local source for a wide range of hardware and bathware products. We are committed to providing quality items and friendly service to help you with all your home improvement and construction needs. Whether you're a DIY enthusiast or a professional contractor, we have the tools and supplies to get the job done right.
-              </p>
-            </div>
-             <div className="order-1 md:order-2 animate-in fade-in-0 slide-in-from-right-10 duration-1000">
-                <Image 
-                    src="/ab.jpg"
-                    alt="Aarya Hardware store interior"
-                    width={800}
-                    height={600}
-                    className="rounded-lg shadow-xl object-cover"
-                />
+        <section id="about" className="py-16 md:py-24 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+              <div className="order-2 md:order-1 animate-in fade-in-0 slide-in-from-left-10 duration-1000">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">About Us</h2>
+                <p className="text-muted-foreground leading-relaxed">
+                  Aarya Bathware is your reliable source for a wide range of premium bathware and hardware products. We are committed to providing exceptional quality and friendly service to help you with all your home improvement and construction needs. Whether you're a DIY enthusiast or a professional contractor, we have the tools and supplies to bring your vision to life.
+                </p>
+              </div>
+              <div className="order-1 md:order-2 animate-in fade-in-0 slide-in-from-right-10 duration-1000">
+                  <Image 
+                      src="/ab.jpg"
+                      alt="Aarya Bathware store interior"
+                      width={800}
+                      height={600}
+                      className="rounded-lg shadow-xl object-cover"
+                  />
+              </div>
             </div>
           </div>
         </section>
@@ -129,24 +143,26 @@ export default function Home() {
             <div className="animate-in fade-in-0 duration-500">
                 <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Get In Touch</h2>
             </div>
-            <div className="max-w-lg mx-auto glass-effect p-8 md:p-12 rounded-xl shadow-lg animate-in fade-in-0 zoom-in-95 duration-700 delay-200">
-                <div className="text-center space-y-6">
-                    <h3 className="text-2xl font-semibold">Our Showroom</h3>
-                    <p className="text-foreground">
-                    Visit us to experience our collection firsthand. Our team is ready to assist you.
-                    </p>
-                    <div className="space-y-4 inline-block text-left pt-2">
-                        <div className="flex items-start gap-4">
-                            <MapPin className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
-                            <p className="text-foreground">Aarya Hardware No. 377 old kottawa road,<br/>kottawa</p>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <Phone className="h-6 w-6 text-primary flex-shrink-0" />
-                            <p className="text-foreground">+94782404099</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Card className="max-w-lg mx-auto shadow-xl overflow-hidden">
+                <CardContent className="p-8 md:p-12">
+                  <div className="text-center space-y-6">
+                      <h3 className="text-2xl font-semibold">Our Showroom</h3>
+                      <p className="text-muted-foreground">
+                        Visit us to experience our collection firsthand. Our team is ready to assist you.
+                      </p>
+                      <div className="space-y-4 inline-block text-left pt-2">
+                          <div className="flex items-start gap-4">
+                              <MapPin className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
+                              <p>Aarya Hardware No. 377 old kottawa road,<br/>kottawa</p>
+                          </div>
+                          <div className="flex items-center gap-4">
+                              <Phone className="h-6 w-6 text-primary flex-shrink-0" />
+                              <p>+94782404099</p>
+                          </div>
+                      </div>
+                  </div>
+                </CardContent>
+            </Card>
           </div>
         </section>
       </main>
