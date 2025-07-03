@@ -121,9 +121,11 @@ export function ProductDetailModal({ product, categoryName, isOpen, onClose }: P
                 )}
             </div>
             
-            <DialogDescription className="text-base text-muted-foreground flex-grow space-y-3">
-              <p>{product.description}</p>
-              {product.description_si && <p className="font-sinhala">{product.description_si}</p>}
+            <DialogDescription asChild>
+              <div className="text-base text-muted-foreground flex-grow flex flex-col space-y-3">
+                <p>{product.description}</p>
+                {product.description_si && <p className="font-sinhala">{product.description_si}</p>}
+              </div>
             </DialogDescription>
 
             <div className="flex items-center gap-2">
