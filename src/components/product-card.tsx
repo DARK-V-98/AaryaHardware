@@ -12,7 +12,7 @@ export function ProductCard(product: Product) {
   const isOutOfStock = product.quantity === 0;
 
   return (
-    <Card className="flex flex-col overflow-hidden transition-shadow hover:shadow-2xl group h-full">
+    <Card className="flex flex-col overflow-hidden group h-full bg-white/40 backdrop-blur-lg border border-white/30 shadow-lg hover:shadow-xl transition-shadow duration-300">
       <CardHeader className="p-0">
         <div className="aspect-square relative overflow-hidden">
            {isOutOfStock && (
