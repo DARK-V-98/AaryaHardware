@@ -55,15 +55,15 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
-     <div className="w-full max-w-md space-y-8">
+    <div className="flex items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+     <div className="w-full max-w-md space-y-8 glass-effect p-8 rounded-lg">
         <div className="grid gap-2 text-center">
-          <Link href="/" className="flex items-center justify-center gap-2 text-2xl font-bold font-headline">
+          <Link href="/" className="flex items-center justify-center gap-2 text-2xl font-bold font-headline text-shadow">
              <Image src="/ar.jpg" alt="Aarya Hardware Logo" width={40} height={40} className="rounded-full" />
              Aarya Hardware
            </Link>
-         <h1 className="text-3xl font-bold mt-4 font-headline">Sign Up</h1>
-         <p className="text-balance text-muted-foreground">
+         <h1 className="text-3xl font-bold mt-4 font-headline text-shadow">Sign Up</h1>
+         <p className="text-balance text-muted-foreground text-shadow-sm">
            Create an account to get started
          </p>
        </div>
@@ -78,6 +78,7 @@ export default function SignupPage() {
              value={email}
              onChange={(e) => setEmail(e.target.value)}
              disabled={loading}
+             className="glass-effect"
            />
          </div>
          <div className="grid gap-2">
@@ -89,6 +90,7 @@ export default function SignupPage() {
              value={password}
              onChange={(e) => setPassword(e.target.value)}
              disabled={loading}
+             className="glass-effect"
              />
          </div>
          <Button type="submit" className="w-full" disabled={loading}>

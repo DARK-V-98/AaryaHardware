@@ -93,35 +93,35 @@ export default function ProductsPage() {
 
 
   return (
-    <div className="flex flex-col min-h-dvh bg-background">
+    <div className="flex flex-col min-h-dvh">
       <Header />
       <main className="flex-1">
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4">
-            <h1 className="text-3xl md:text-4xl font-bold text-center mb-6 font-headline">
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-6 font-headline text-shadow">
               Our Collection
             </h1>
-            <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-              Browse our curated selection of premium hardware. Use the filters below to find exactly what you need.
+            <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto text-shadow-sm">
+              Browse our curated selection of hardware. Use the filters below to find exactly what you need.
             </p>
 
             {/* Filter and Sort Controls */}
-            <div className="mb-8 flex flex-col md:flex-row gap-4 justify-between items-center p-4 rounded-lg bg-card border">
+            <div className="mb-8 flex flex-col md:flex-row gap-4 justify-between items-center p-4 rounded-lg glass-effect">
               <div className="relative w-full md:max-w-sm">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <Input 
                     placeholder="Search products..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 glass-effect"
                 />
               </div>
               <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                 <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                    <SelectTrigger className="w-full sm:w-[200px]">
+                    <SelectTrigger className="w-full sm:w-[200px] glass-effect">
                         <SelectValue placeholder="Filter by category" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="glass-effect">
                         <SelectItem value="all">All Categories</SelectItem>
                         {categories.map(category => (
                             <SelectItem key={category.id} value={category.id}>
@@ -131,10 +131,10 @@ export default function ProductsPage() {
                     </SelectContent>
                 </Select>
                 <Select value={sortOption} onValueChange={setSortOption}>
-                    <SelectTrigger className="w-full sm:w-[200px]">
+                    <SelectTrigger className="w-full sm:w-[200px] glass-effect">
                         <SelectValue placeholder="Sort by" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="glass-effect">
                         <SelectItem value="date-desc">Newest Arrivals</SelectItem>
                         <SelectItem value="price-asc">Price: Low to High</SelectItem>
                         <SelectItem value="price-desc">Price: High to Low</SelectItem>
@@ -156,9 +156,9 @@ export default function ProductsPage() {
                 ))}
               </div>
             ) : (
-                <div className="text-center py-16">
-                    <h2 className="text-2xl font-semibold">No Products Found</h2>
-                    <p className="mt-2 text-muted-foreground">Try adjusting your search or filter criteria.</p>
+                <div className="text-center py-16 glass-effect rounded-lg">
+                    <h2 className="text-2xl font-semibold text-shadow">No Products Found</h2>
+                    <p className="mt-2 text-muted-foreground text-shadow-sm">Try adjusting your search or filter criteria.</p>
                 </div>
             )}
           </div>

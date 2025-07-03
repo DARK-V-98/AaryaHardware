@@ -16,7 +16,7 @@ export function Footer() {
   const whatsappUrl = `https://wa.me/c/94782404099`;
 
   return (
-    <footer className="border-t bg-card">
+    <footer className="border-t glass-effect">
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground order-2 sm:order-1 text-center sm:text-left">

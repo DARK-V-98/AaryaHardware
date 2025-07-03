@@ -54,16 +54,16 @@ export default function Home() {
 
 
   return (
-    <div className="flex flex-col min-h-dvh bg-background">
+    <div className="flex flex-col min-h-dvh">
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-24 md:py-40 bg-background text-foreground overflow-hidden">
+        <section className="w-full py-24 md:py-40 text-foreground overflow-hidden">
           <div className="container mx-auto px-4 text-center flex flex-col items-center">
-            <h1 className="text-4xl md:text-7xl font-bold font-headline mb-4 max-w-4xl animate-in fade-in slide-in-from-bottom-10 duration-1000">
+            <h1 className="text-4xl md:text-7xl font-bold font-headline mb-4 max-w-4xl animate-in fade-in slide-in-from-bottom-10 duration-1000 text-shadow">
               Your Trusted Hardware & Bathware Store
             </h1>
-            <p className="text-lg md:text-xl max-w-2xl mx-auto text-muted-foreground mt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
+            <p className="text-lg md:text-xl max-w-2xl mx-auto text-muted-foreground mt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200 text-shadow">
               Find everything you need for your home improvement projects, from essential hardware to stylish bathware.
             </p>
             <div className="animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-400">
@@ -78,7 +78,7 @@ export default function Home() {
         <section id="products" className="py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="animate-in fade-in duration-500">
-                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-headline">
+                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 font-headline text-shadow">
                 Featured Products
                 </h2>
             </div>
@@ -104,11 +104,11 @@ export default function Home() {
         </section>
         
         {/* About Us Section */}
-        <section id="about" className="py-16 md:py-24 bg-card">
-          <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+        <section id="about" className="py-16 md:py-24">
+          <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center glass-effect rounded-lg p-8 md:p-12">
             <div className="order-2 md:order-1 animate-in fade-in-0 slide-in-from-left-10 duration-1000">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">About Aarya Hardware</h2>
-              <p className="text-muted-foreground leading-relaxed">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-shadow">About Aarya Hardware</h2>
+              <p className="text-muted-foreground leading-relaxed text-shadow-sm">
                 Aarya Hardware is your reliable local source for a wide range of hardware and bathware products. We are committed to providing quality items and friendly service to help you with all your home improvement and construction needs. Whether you're a DIY enthusiast or a professional contractor, we have the tools and supplies to get the job done right.
               </p>
             </div>
@@ -128,22 +128,22 @@ export default function Home() {
         <section id="contact" className="py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="animate-in fade-in-0 duration-500">
-                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Get In Touch</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-shadow">Get In Touch</h2>
             </div>
-            <div className="max-w-lg mx-auto bg-card p-8 md:p-12 rounded-xl shadow-lg border animate-in fade-in-0 zoom-in-95 duration-700 delay-200">
+            <div className="max-w-lg mx-auto glass-effect p-8 md:p-12 rounded-xl shadow-lg animate-in fade-in-0 zoom-in-95 duration-700 delay-200">
                 <div className="text-center space-y-6">
-                    <h3 className="text-2xl font-semibold">Our Showroom</h3>
-                    <p className="text-muted-foreground">
+                    <h3 className="text-2xl font-semibold text-shadow">Our Showroom</h3>
+                    <p className="text-muted-foreground text-shadow-sm">
                     Visit us to experience our collection firsthand. Our team is ready to assist you.
                     </p>
                     <div className="space-y-4 inline-block text-left pt-2">
                         <div className="flex items-start gap-4">
                             <MapPin className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
-                            <p className="text-muted-foreground">Aarya Hardware No. 377 old kottawa road,<br/>kottawa</p>
+                            <p className="text-muted-foreground text-shadow-sm">Aarya Hardware No. 377 old kottawa road,<br/>kottawa</p>
                         </div>
                         <div className="flex items-center gap-4">
                             <Phone className="h-6 w-6 text-primary flex-shrink-0" />
-                            <p className="text-muted-foreground">+94782404099</p>
+                            <p className="text-muted-foreground text-shadow-sm">+94782404099</p>
                         </div>
                     </div>
                 </div>

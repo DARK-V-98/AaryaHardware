@@ -50,9 +50,9 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b glass-effect">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2 font-bold text-lg font-headline">
+        <Link href="/" className="flex items-center gap-2 font-bold text-lg font-headline text-shadow">
           <Image src="/ar.jpg" alt="Aarya Hardware Logo" width={32} height={32} className="rounded-full" />
           Aarya Hardware
         </Link>
@@ -61,13 +61,13 @@ export function Header() {
             <Link
               key={link.label}
               href={link.href}
-              className="transition-colors hover:text-primary"
+              className="transition-colors hover:text-primary text-shadow-sm"
             >
               {link.label}
             </Link>
           ))}
            {role === 'admin' && (
-             <Link href="/admin" className="transition-colors hover:text-primary">Admin</Link>
+             <Link href="/admin" className="transition-colors hover:text-primary text-shadow-sm">Admin</Link>
            )}
         </nav>
         <div className="flex items-center gap-4">
@@ -85,7 +85,7 @@ export function Header() {
                       </Avatar>
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuContent className="w-56 glass-effect" align="end" forceMount>
                     <DropdownMenuLabel className="font-normal">
                       <div className="flex flex-col space-y-1">
                         <p className="text-sm font-medium leading-none">{user.displayName || 'User'}</p>
@@ -136,7 +136,7 @@ export function Header() {
                   <span className="sr-only">Open menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right">
+              <SheetContent side="right" className="glass-effect">
                 <div className="p-4">
                   <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-8 font-headline">
                     <Image src="/ar.jpg" alt="Aarya Hardware Logo" width={32} height={32} className="rounded-full" />
