@@ -58,12 +58,12 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative w-full h-[70vh] md:h-[80vh] flex items-center text-white overflow-hidden">
+        <section className="relative w-full h-[70vh] md:h-[80vh] flex items-center text-white overflow-hidden bg-black">
           <Image
             src="/arb.jpg"
             alt="Beautiful bathroom scene"
             fill
-            className="object-cover"
+            className="object-contain"
             priority
           />
           <div className="relative z-20 container mx-auto px-4 text-center">
