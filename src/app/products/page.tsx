@@ -113,12 +113,12 @@ export default function ProductsPage() {
                     placeholder="Search products..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 glass-effect"
+                    className="pl-10"
                 />
               </div>
               <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                 <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                    <SelectTrigger className="w-full sm:w-[200px] glass-effect">
+                    <SelectTrigger className="w-full sm:w-[200px]">
                         <SelectValue placeholder="Filter by category" />
                     </SelectTrigger>
                     <SelectContent className="glass-effect">
@@ -131,7 +131,7 @@ export default function ProductsPage() {
                     </SelectContent>
                 </Select>
                 <Select value={sortOption} onValueChange={setSortOption}>
-                    <SelectTrigger className="w-full sm:w-[200px] glass-effect">
+                    <SelectTrigger className="w-full sm:w-[200px]">
                         <SelectValue placeholder="Sort by" />
                     </SelectTrigger>
                     <SelectContent className="glass-effect">

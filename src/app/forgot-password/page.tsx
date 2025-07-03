@@ -67,7 +67,6 @@ export default function ForgotPasswordPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
-              className="glass-effect"
             />
           </div>
           <Button type="submit" className="w-full" disabled={loading}>
