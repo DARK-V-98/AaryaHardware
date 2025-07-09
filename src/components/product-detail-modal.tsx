@@ -82,6 +82,7 @@ export function ProductDetailModal({ product, categoryName, isOpen, onClose }: P
                           src={img}
                           alt={`${product.name} image ${index + 1}`}
                           fill
+                          sizes="(max-width: 768px) 90vw, 45vw"
                           className="object-cover rounded-md"
                         />
                     </div>

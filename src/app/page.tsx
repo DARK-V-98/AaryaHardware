@@ -60,9 +60,17 @@ export default function Home() {
       <main className="flex-1">
         {/* Hero Section */}
         <section 
-          className="w-full py-32 md:py-48 flex items-center justify-center text-center relative bg-cover bg-center"
-          style={{ backgroundImage: `url('/169.jpg')` }}
+          className="w-full py-32 md:py-48 flex items-center justify-center text-center relative"
         >
+          <Image
+            src="/169.jpg"
+            alt="Premium bathware and hardware fixtures"
+            data-ai-hint="bathware collection"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
           <div className="absolute inset-0 bg-black/50 z-0" />
           <div className="container mx-auto px-4 flex flex-col items-center relative z-10">
             <h1 className="text-4xl md:text-7xl font-bold font-headline mb-4 max-w-4xl text-white animate-in fade-in slide-in-from-bottom-10 duration-1000">
@@ -127,7 +135,8 @@ export default function Home() {
                       alt="Aarya Hardware store interior"
                       width={800}
                       height={600}
-                      className="rounded-lg shadow-xl object-cover"
+                      sizes="(max-width: 768px) 90vw, 40vw"
+                      className="rounded-lg shadow-xl object-cover w-full h-auto"
                   />
               </div>
             </div>

@@ -25,6 +25,7 @@ export function ProductCard({ className, ...product }: Product & { className?: s
             src={product.imageUrl}
             alt={product.name}
             fill
+            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 22vw"
             className={`object-cover group-hover:scale-105 transition-transform duration-300 ${isOutOfStock ? 'grayscale' : ''}`}
             data-ai-hint={product.imageHint}
           />
