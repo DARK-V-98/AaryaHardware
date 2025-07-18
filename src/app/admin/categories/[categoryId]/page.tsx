@@ -9,6 +9,11 @@ import { Category } from '@/lib/data';
 import { CategoryForm } from '../new/category-form';
 import { Loader2 } from 'lucide-react';
 
+// This function is required for static export of dynamic routes.
+export async function generateStaticParams() {
+  return [];
+}
+
 export default function EditCategoryPage() {
   const params = useParams<{ categoryId: string }>();
   const [category, setCategory] = useState<Category | null>(null);

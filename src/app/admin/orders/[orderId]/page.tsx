@@ -15,7 +15,6 @@ import { Badge } from '@/components/ui/badge';
 import { Banknote, Truck } from 'lucide-react';
 
 // This function is required for static export of dynamic routes.
-// It tells Next.js not to pre-render any specific pages at build time.
 export async function generateStaticParams() {
   return [];
 }

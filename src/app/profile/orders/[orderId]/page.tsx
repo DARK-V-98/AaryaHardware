@@ -16,6 +16,11 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Banknote, Truck } from 'lucide-react';
 
+// This function is required for static export of dynamic routes.
+export async function generateStaticParams() {
+  return [];
+}
+
 export default function UserOrderPage() {
   const params = useParams<{ orderId: string }>();
   const { user, loading: authLoading } = useAuth();
