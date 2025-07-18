@@ -1,6 +1,8 @@
 
 import { MetadataRoute } from 'next'
  
+export const dynamic = 'force-static';
+
 // This file generates the sitemap.xml for the website.
 // Next.js automatically serves it at the /sitemap.xml route.
 const URL = 'https://www.aaryahardware.lk';

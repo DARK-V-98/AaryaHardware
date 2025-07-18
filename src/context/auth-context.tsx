@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
@@ -73,8 +74,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ user, role, loading }}>
-      {/* Don't render children until the initial auth state and role are determined */}
-      {loading ? null : children}
+      {children}
     </AuthContext.Provider>
   );
 };
