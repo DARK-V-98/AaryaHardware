@@ -170,7 +170,7 @@ export default function CheckoutPage() {
 
         clearCart();
         toast({ title: 'Order Placed!', description: 'Your order has been successfully placed.' });
-        router.push(`/order-confirmation?id=${orderId}`);
+        router.push(`/order-confirmation/${orderId}`);
 
     } catch (error: any) {
         console.error("Checkout error:", error);
@@ -323,5 +323,7 @@ export default function CheckoutPage() {
     </div>
   )
 }
+
+    
 
     

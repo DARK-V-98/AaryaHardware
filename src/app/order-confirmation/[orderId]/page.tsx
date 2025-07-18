@@ -1,7 +1,8 @@
+
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import { Order } from '@/lib/data';
@@ -14,21 +15,20 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 
-function OrderConfirmationContent() {
-  const searchParams = useSearchParams();
-  const orderId = searchParams.get('id');
+export default function OrderConfirmationPage() {
+  const params = useParams<{ orderId: string }>();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
     const fetchOrder = async () => {
-      if (!orderId) {
+      if (!params.orderId) {
         setLoading(false);
         return;
       };
       try {
-        const docRef = doc(firestore, 'orders', orderId);
+        const docRef = doc(firestore, 'orders', params.orderId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setOrder({ id: docSnap.id, ...docSnap.data() } as Order);
@@ -40,7 +40,7 @@ function OrderConfirmationContent() {
       }
     };
     fetchOrder();
-  }, [orderId]);
+  }, [params.orderId]);
 
   const copyToClipboard = (text: string, field: string) => {
     navigator.clipboard.writeText(text);
@@ -49,7 +49,15 @@ function OrderConfirmationContent() {
 
 
   if (loading) {
-    return <div className="flex justify-center items-center min-h-screen"><Loader2 className="h-16 w-16 animate-spin" /></div>;
+    return (
+        <div className="flex flex-col min-h-dvh bg-background">
+            <Header />
+            <main className="flex-1 flex justify-center items-center">
+                <Loader2 className="h-16 w-16 animate-spin" />
+            </main>
+            <Footer />
+        </div>
+    )
   }
 
   if (!order) {
@@ -145,10 +153,4 @@ function OrderConfirmationContent() {
   )
 }
 
-export default function OrderConfirmationPage() {
-    return (
-        <Suspense fallback={<div className="flex justify-center items-center min-h-screen"><Loader2 className="h-16 w-16 animate-spin" /></div>}>
-            <OrderConfirmationContent />
-        </Suspense>
-    )
-}
+    

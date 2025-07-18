@@ -14,11 +14,6 @@ import { StatusUpdater } from './status-updater';
 import { Badge } from '@/components/ui/badge';
 import { Banknote, Truck } from 'lucide-react';
 
-// This function is required for static export of dynamic routes.
-export async function generateStaticParams() {
-  return [];
-}
-
 export default function OrderPage() {
   const params = useParams<{ orderId: string }>();
   const [order, setOrder] = useState<Order | null>(null);
@@ -161,3 +156,5 @@ export default function OrderPage() {
     </div>
   );
 }
+
+    

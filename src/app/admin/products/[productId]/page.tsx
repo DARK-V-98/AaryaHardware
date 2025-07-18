@@ -9,11 +9,6 @@ import { Product, Category } from '@/lib/data';
 import { ProductForm } from '../new/product-form';
 import { Loader2 } from 'lucide-react';
 
-// This function is required for static export of dynamic routes.
-export async function generateStaticParams() {
-  return [];
-}
-
 export default function EditProductPage() {
   const params = useParams<{ productId: string }>();
   const [product, setProduct] = useState<Product | null>(null);
@@ -76,3 +71,5 @@ export default function EditProductPage() {
     </div>
   );
 }
+
+    
