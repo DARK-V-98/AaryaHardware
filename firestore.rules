@@ -1,0 +1,46 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if the requesting user is an admin.
+    // It checks if a document exists for the user in the 'users' collection
+    // and if that document has the 'role' field set to 'admin'.
+    function isAdmin() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Products can be read by anyone, but only created, updated, or deleted by admins.
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Categories can be read by anyone, but only created, updated, or deleted by admins.
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Orders have more complex rules:
+    // - Authenticated users can create new orders.
+    // - Users can only read their own orders.
+    // - Admins can read and update any order (e.g., to change status).
+    match /orders/{orderId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth.uid == resource.data.userId || isAdmin();
+      allow update: if isAdmin();
+      allow delete: if false; // Orders should not be deletable.
+    }
+    
+    // User data rules:
+    // - A user can read their own document.
+    // - A user can create their own document upon signup.
+    // - Admins can read and update any user's document (to change roles).
+    match /users/{userId} {
+      allow read, create: if request.auth.uid == userId;
+      allow update, list: if isAdmin();
+    }
+  }
+}
