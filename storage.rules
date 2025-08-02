@@ -2,22 +2,23 @@ rules_version = '2';
 
 service firebase.storage {
   match /b/{bucket}/o {
-  
-    // Helper function to check for admin role from Firestore
+    
+    // Helper function to check for admin role
     function isAdmin() {
-      return exists(/databases/{database}/documents/users/$(request.auth.uid)) &&
+      // Check if the user is authenticated and if their user document shows they are an admin.
+      return request.auth != null && 
+             exists(/databases/{database}/documents/users/$(request.auth.uid)) &&
              get(/databases/{database}/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
-  
-    match /products/{allPaths=**} {
-      // Allow public read access for anyone to view product images
-      allow read;
-      
-      // Allow create and update access only for admin users
-      allow create, update: if isAdmin();
 
-      // Explicitly allow delete access for admin users
-      allow delete: if isAdmin();
+    // Rules for the products folder
+    match /products/{allPaths=**} {
+      // Allow public read access for all product images so anyone can view them.
+      allow read: if true;
+      
+      // Allow create, update, and delete operations ONLY for admin users.
+      // This single "allow write" covers all modification actions.
+      allow write: if isAdmin();
     }
   }
 }
