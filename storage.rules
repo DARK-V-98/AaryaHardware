@@ -15,7 +15,7 @@ service firebase.storage {
     match /products/{allPaths=**} {
       // Allow public read access for all product images so anyone can view them.
       allow read: if true;
-      
+      // Helper function to check for admin role
       // Allow create, update, and delete operations ONLY for admin users.
       // This single "allow write" covers all modification actions.
       allow write: if isAdmin();
