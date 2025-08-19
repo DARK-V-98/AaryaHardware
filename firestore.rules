@@ -3,52 +3,51 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper function to check if a user is an admin
+    // Helper function to check for admin role
     function isAdmin() {
-      // Check if the user has an 'admin' role in their user document
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
     
-    // Helper function to check if user is authenticated
+    // Helper function to check if the user is authenticated
     function isAuthenticated() {
       return request.auth != null;
     }
 
-    // Products: public read, admin-only write, but allow quantity updates for checkout
+    // Products can be read by anyone.
+    // Admins have full write access.
+    // Authenticated users can only update the quantity field.
     match /products/{productId} {
-      allow get: if true; // Allow anyone to get a single product
-      allow list: if true; // Allow anyone to list products
-
-      // Admins can create and delete products
+      allow read: if true;
       allow create, delete: if isAdmin();
-
-      // Allow updates under specific conditions:
-      // 1. Full updates for admins
-      // 2. Quantity-only updates for any authenticated user (for checkout transaction)
       allow update: if isAdmin() || 
-                     (isAuthenticated() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['quantity']));
+                      (isAuthenticated() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['quantity']));
     }
 
-    // Categories: public read, admin-only write
+    // Categories can be read by anyone, but only written to by admins.
     match /categories/{categoryId} {
       allow read: if true;
       allow write: if isAdmin();
     }
 
-    // Orders: users can create/read their own, admins can read/update all
+    // Orders:
+    // - Users can create their own orders.
+    // - Users can read their own orders.
+    // - Admins can read and update any order.
+    // - Deletion is disallowed to maintain order history.
     match /orders/{orderId} {
-      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
-      
       allow read: if (isAuthenticated() && resource.data.userId == request.auth.uid) || isAdmin();
-      
-      allow update: if isAdmin(); // Only admins can update order status
-      
-      allow delete: if false; // Never allow deleting orders
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update: if isAdmin();
+      allow delete: if false;
     }
 
-    // Users: users can read their own role, admins can write roles
+    // Users:
+    // - Users can read their own data.
+    // - Admins can read any user's data.
+    // - Only admins can create, update, or delete user roles.
     match /users/{userId} {
-      allow read: if isAuthenticated() && request.auth.uid == userId;
+      allow read: if (isAuthenticated() && request.auth.uid == userId) || isAdmin();
       allow write: if isAdmin();
     }
   }
