@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, runTransaction, serverTimestamp } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import { Order } from '@/lib/data';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -25,18 +25,48 @@ export function StatusUpdater({ orderId, currentStatus }: StatusUpdaterProps) {
   const handleUpdate = async () => {
     if (selectedStatus === currentStatus) return;
     setLoading(true);
+
     try {
-      const orderRef = doc(firestore, 'orders', orderId);
-      await updateDoc(orderRef, {
-        status: selectedStatus,
-        updatedAt: serverTimestamp(),
-      });
-      toast({ title: 'Status Updated', description: 'Order status has been successfully updated.' });
+        await runTransaction(firestore, async (transaction) => {
+            const orderRef = doc(firestore, 'orders', orderId);
+            const orderDoc = await transaction.get(orderRef);
+
+            if (!orderDoc.exists()) {
+                throw new Error("Order does not exist!");
+            }
+
+            // If the new status is 'Cancelled', restock items.
+            if (selectedStatus === 'Cancelled') {
+                const orderData = orderDoc.data() as Order;
+                
+                // For each item in the order, find the product and increase its quantity.
+                for (const item of orderData.items) {
+                    const productRef = doc(firestore, 'products', item.productId);
+                    const productDoc = await transaction.get(productRef);
+
+                    if (productDoc.exists()) {
+                        const currentQuantity = productDoc.data().quantity;
+                        const newQuantity = currentQuantity + item.quantity;
+                        transaction.update(productRef, { quantity: newQuantity });
+                    }
+                    // If product doesn't exist, we just skip it, as we can't restock it.
+                }
+            }
+            
+            // Finally, update the order status
+            transaction.update(orderRef, {
+                status: selectedStatus,
+                updatedAt: serverTimestamp(),
+            });
+        });
+        
+        toast({ title: 'Status Updated', description: 'Order status has been successfully updated.' });
+
     } catch (error: any) {
-      console.error('Error updating status:', error);
-      toast({ title: 'Error', description: 'Failed to update order status.', variant: 'destructive' });
+        console.error('Error updating status:', error);
+        toast({ title: 'Error', description: 'Failed to update order status: ' + error.message, variant: 'destructive' });
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
 
