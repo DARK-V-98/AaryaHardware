@@ -1,45 +1,54 @@
-
 rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper function to check for admin role
+    // Helper function to check if a user is an admin
     function isAdmin() {
-      // Check if the user is authenticated and has an 'admin' role in the 'users' collection.
-      return request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
-             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      // Check if the user has an 'admin' role in their user document
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
     }
 
-    // Products can be read by anyone.
-    // They can be fetched individually (get) by any authenticated user for cart/checkout validation.
-    // They can only be listed, created, updated, or deleted by admins.
+    // Products: public read, admin-only write, but allow quantity updates for checkout
     match /products/{productId} {
-      allow get: if request.auth != null; // Allows fetching a single product
-      allow list: if true; // Allows fetching collections of products
-      allow write: if isAdmin(); // Create, update, delete only for admins
+      allow get: if true; // Allow anyone to get a single product
+      allow list: if true; // Allow anyone to list products
+
+      // Admins can create and delete products
+      allow create, delete: if isAdmin();
+
+      // Allow updates under specific conditions:
+      // 1. Full updates for admins
+      // 2. Quantity-only updates for any authenticated user (for checkout transaction)
+      allow update: if isAdmin() || 
+                     (isAuthenticated() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['quantity']));
     }
 
-    // Categories can be read by anyone, but only written by admins.
+    // Categories: public read, admin-only write
     match /categories/{categoryId} {
       allow read: if true;
       allow write: if isAdmin();
     }
 
-    // Orders can be created by any authenticated user for themselves.
-    // They can only be read by the user who created them or by an admin.
-    // They can only be updated by an admin. Deletion is disallowed.
+    // Orders: users can create/read their own, admins can read/update all
     match /orders/{orderId} {
-      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
-      allow read: if request.auth != null && (resource.data.userId == request.auth.uid || isAdmin());
-      allow update: if isAdmin();
-      allow delete: if false; // Disallow deletion for data integrity
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      
+      allow read: if (isAuthenticated() && resource.data.userId == request.auth.uid) || isAdmin();
+      
+      allow update: if isAdmin(); // Only admins can update order status
+      
+      allow delete: if false; // Never allow deleting orders
     }
 
-    // User data can be read by the user themselves or an admin.
-    // Only admins can modify user roles.
+    // Users: users can read their own role, admins can write roles
     match /users/{userId} {
-      allow read: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow read: if isAuthenticated() && request.auth.uid == userId;
       allow write: if isAdmin();
     }
   }
