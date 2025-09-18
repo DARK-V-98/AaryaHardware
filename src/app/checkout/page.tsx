@@ -19,10 +19,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Loader2, Banknote, Truck } from 'lucide-react';
+import { Loader2, Banknote, Truck, MessageCircleWarning } from 'lucide-react';
 import Image from 'next/image';
 import { Order, PaymentMethod } from '@/lib/data';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const formSchema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -196,7 +197,19 @@ export default function CheckoutPage() {
     <div className="flex flex-col min-h-dvh bg-background">
         <Header />
         <main className="flex-1 container mx-auto px-4 py-16">
-            <h1 className="text-3xl md:text-4xl font-bold text-center mb-12">Checkout</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-6">Checkout</h1>
+            <Alert className="max-w-4xl mx-auto mb-12 bg-blue-50 border-blue-200">
+                <MessageCircleWarning className="h-5 w-5 text-blue-600" />
+                <AlertTitle className="text-blue-800 font-bold">Important: Order Confirmation</AlertTitle>
+                <AlertDescription className="text-blue-700">
+                    After placing your order, you must confirm it via WhatsApp.
+                    <ul className="list-disc pl-5 mt-2 space-y-1">
+                        <li><b>Bank Transfers:</b> Send your payment receipt and Order ID.</li>
+                        <li><b>Cash on Delivery:</b> Send "COD" and your Order ID.</li>
+                    </ul>
+                     This step is required to process your order.
+                </AlertDescription>
+            </Alert>
              <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="grid md:grid-cols-2 gap-12">
                     <div>
@@ -311,10 +324,15 @@ export default function CheckoutPage() {
                                 )}
                             </CardContent>
                         </Card>
-                        <Button type="submit" className="w-full" size="lg" disabled={loading || cartCount === 0}>
-                            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                            Place Order
-                        </Button>
+                         <div className="flex flex-col-reverse sm:flex-row gap-4">
+                            <Button type="button" variant="outline" className="w-full" onClick={() => router.push('/products')}>
+                                Cancel
+                            </Button>
+                            <Button type="submit" className="w-full" size="lg" disabled={loading || cartCount === 0}>
+                                {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                                Place Order
+                            </Button>
+                        </div>
                     </div>
                 </form>
             </Form>
@@ -323,7 +341,3 @@ export default function CheckoutPage() {
     </div>
   )
 }
-
-    
-
-    
