@@ -108,14 +108,14 @@ export default function OrderConfirmationPage() {
                                     <div><span className="font-medium">Account Name:</span> Aarya Hardware</div>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <div><span className="font-medium">Bank Name:</span> Commercial Bank</div>
+                                    <div><span className="font-medium">Bank Name:</span> NDB Bank</div>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <div><span className="font-medium">Account Number:</span> 123456789012</div>
-                                    <Button variant="ghost" size="icon" onClick={() => copyToClipboard('123456789012', 'Account Number')}><Copy className="h-4 w-4"/></Button>
+                                    <div><span className="font-medium">Account Number:</span> 111000268395</div>
+                                    <Button variant="ghost" size="icon" onClick={() => copyToClipboard('111000268395', 'Account Number')}><Copy className="h-4 w-4"/></Button>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <div><span className="font-medium">Branch:</span> Colombo 07</div>
+                                    <div><span className="font-medium">Branch:</span> PItakotte</div>
                                 </div>
                             </div>
                         </div>
@@ -152,5 +152,3 @@ export default function OrderConfirmationPage() {
     </div>
   )
 }
-
-    
