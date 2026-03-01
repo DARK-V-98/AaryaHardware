@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
@@ -159,7 +158,7 @@ export default function Home() {
                       <div className="space-y-4 inline-block text-left pt-2">
                           <div className="flex items-start gap-4">
                               <MapPin className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
-                              <p>Aarya Hardware No. 377 old kottawa road,<br/>kottawa</p>
+                              <p>Aarya Hardware,<br/>80 Polgasowita Rd, Kottawa</p>
                           </div>
                           <div className="flex items-center gap-4">
                               <Phone className="h-6 w-6 text-primary flex-shrink-0" />
