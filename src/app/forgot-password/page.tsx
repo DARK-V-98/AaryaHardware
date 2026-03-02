@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -31,7 +30,7 @@ export default function ForgotPasswordPage() {
     } catch (error: any) {
       // To prevent user enumeration (figuring out which emails are registered),
       // we show a generic success message even if the user is not found.
-      // You can change this behavior if you prefer to show an explicit error.
+      // You can change this behavior if you prefer to show an account explicit error.
       if (error.code === 'auth/user-not-found') {
          toast({
             title: 'Password Reset Email Sent',
@@ -50,8 +49,8 @@ export default function ForgotPasswordPage() {
       <Card className="w-full max-w-md shadow-2xl">
          <CardHeader className="text-center">
             <Link href="/" className="flex items-center justify-center gap-2 text-2xl font-bold mb-2">
-                <Image src="/ah.png" alt="Aarya Hardware Logo" width={50} height={50} className="rounded-full" />
-                Aarya Hardware
+                <Image src="/ah.png" alt="Aarya Bathware Logo" width={50} height={50} className="rounded-full" />
+                Aarya Bathware
             </Link>
           <CardTitle>Reset Password</CardTitle>
           <CardDescription>

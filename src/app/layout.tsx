@@ -1,4 +1,3 @@
-
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -19,28 +18,28 @@ export const metadata: Metadata = {
   
   // Title template for dynamic titles
   title: {
-    default: 'Aarya Hardware | Quality Bathware & Fixtures in Sri Lanka',
-    template: `%s | Aarya Hardware`,
+    default: 'Aarya Bathware | Quality Bathware & Fixtures in Sri Lanka',
+    template: `%s | Aarya Bathware`,
   },
   
   // SEO-friendly description
-  description: 'Aarya Hardware is your trusted hardware store in Sri Lanka for premium bathware, quality hardware, and home improvement essentials. Visit our showroom in Kottawa.',
+  description: 'Aarya Bathware is your trusted store in Sri Lanka for premium bathware, quality hardware, and home improvement essentials. Visit our showroom in Kottawa.',
   
   // Keywords for search engines
-  keywords: ['Aarya Hardware', 'hardware store Sri Lanka', 'bathware Sri Lanka', 'home improvement Kottawa', 'plumbing fixtures', 'bathroom accessories'],
+  keywords: ['Aarya Bathware', 'hardware store Sri Lanka', 'bathware Sri Lanka', 'home improvement Kottawa', 'plumbing fixtures', 'bathroom accessories'],
   
   // Open Graph metadata for social sharing
   openGraph: {
-    title: 'Aarya Hardware | Quality Bathware & Fixtures in Sri Lanka',
+    title: 'Aarya Bathware | Quality Bathware & Fixtures in Sri Lanka',
     description: 'Your trusted source for premium bathware and quality hardware in Sri Lanka.',
     url: 'https://www.aaryahardware.lk',
-    siteName: 'Aarya Hardware',
+    siteName: 'Aarya Bathware',
     images: [
       {
         url: '/ab.jpg', // Path to a good representative image
         width: 800,
         height: 600,
-        alt: 'Aarya Hardware store interior',
+        alt: 'Aarya Bathware store interior',
       },
     ],
     locale: 'en_US',
@@ -50,8 +49,8 @@ export const metadata: Metadata = {
   // Twitter card metadata
   twitter: {
     card: 'summary_large_image',
-    title: 'Aarya Hardware | Quality Bathware & Fixtures in Sri Lanka',
-    description: 'Discover premium bathware and quality hardware at Aarya Hardware, your top choice in Sri Lanka.',
+    title: 'Aarya Bathware | Quality Bathware & Fixtures in Sri Lanka',
+    description: 'Discover premium bathware and quality hardware at Aarya Bathware, your top choice in Sri Lanka.',
     images: ['/ab.jpg'], // Path to a good representative image
   },
 };

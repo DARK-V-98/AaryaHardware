@@ -125,13 +125,13 @@ export default function Home() {
               <div className="order-2 md:order-1 animate-in fade-in-0 slide-in-from-left-10 duration-1000">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">About Us</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Aarya Hardware is your reliable source in Sri Lanka for a wide range of premium bathware and hardware products. We are committed to providing exceptional quality and friendly service to help you with all your home improvement and construction needs. Whether you're a DIY enthusiast or a professional contractor, we have the tools and supplies to bring your vision to life at our Kottawa hardware store.
+                  Aarya Bathware is your reliable source in Sri Lanka for a wide range of premium bathware and hardware products. We are committed to providing exceptional quality and friendly service to help you with all your home improvement and construction needs. Whether you're a DIY enthusiast or a professional contractor, we have the tools and supplies to bring your vision to life at our Kottawa showroom.
                 </p>
               </div>
               <div className="order-1 md:order-2 animate-in fade-in-0 slide-in-from-right-10 duration-1000">
                   <Image 
                       src="/ab.jpg"
-                      alt="Aarya Hardware store interior"
+                      alt="Aarya Bathware store interior"
                       width={800}
                       height={600}
                       sizes="(max-width: 768px) 90vw, 40vw"
@@ -158,7 +158,7 @@ export default function Home() {
                       <div className="space-y-4 inline-block text-left pt-2">
                           <div className="flex items-start gap-4">
                               <MapPin className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
-                              <p>Aarya Hardware,<br/>80 Polgasowita Rd, Kottawa</p>
+                              <p>Aarya Bathware,<br/>80 Polgasowita Rd, Kottawa</p>
                           </div>
                           <div className="flex items-center gap-4">
                               <Phone className="h-6 w-6 text-primary flex-shrink-0" />

@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -70,7 +69,7 @@ export default function OrderConfirmationPage() {
             const orderRef = doc(firestore, 'orders', order.id);
             const orderDoc = await transaction.get(orderRef);
 
-            if (!orderDoc.exists() || orderDoc.data().status !== 'Pending Payment' && orderDoc.data().status !== 'Processing') {
+            if (!orderDoc.exists() || (orderDoc.data().status !== 'Pending Payment' && orderDoc.data().status !== 'Processing')) {
                 throw new Error("Order can no longer be cancelled.");
             }
 
@@ -217,7 +216,7 @@ export default function OrderConfirmationPage() {
                               <p className="text-muted-foreground">Please transfer the total amount to the account below. Use your Order ID as the payment reference and send the receipt via WhatsApp.</p>
                               <div className="p-4 border rounded-md space-y-3">
                                   <div className="flex justify-between items-center">
-                                      <div><span className="font-medium">Account Name:</span> Aarya Hardware</div>
+                                      <div><span className="font-medium">Account Name:</span> Aarya Bathware</div>
                                   </div>
                                   <div className="flex justify-between items-center">
                                       <div><span className="font-medium">Bank Name:</span> NDB Bank</div>

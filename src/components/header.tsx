@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -54,8 +53,8 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-3 font-bold text-lg">
-          <Image src="/ah.png" alt="Aarya Hardware Logo" width={50} height={50} className="rounded-full" />
-          <span>Aarya Hardware</span>
+          <Image src="/ah.png" alt="Aarya Bathware Logo" width={50} height={50} className="rounded-full" />
+          <span>Aarya Bathware</span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
           {navLinks.map((link) => (
@@ -140,8 +139,8 @@ export function Header() {
               <SheetContent side="right">
                 <div className="p-4">
                   <Link href="/" className="flex items-center gap-2 font-bold text-lg mb-8">
-                    <Image src="/ah.png" alt="Aarya Hardware Logo" width={40} height={40} className="rounded-full" />
-                    Aarya Hardware
+                    <Image src="/ah.png" alt="Aarya Bathware Logo" width={40} height={40} className="rounded-full" />
+                    Aarya Bathware
                   </Link>
                   <nav className="flex flex-col gap-4">
                     {[...navLinks, ...(role === 'admin' ? [{ href: "/admin", label: "Admin" }] : [])].map((link) => (
