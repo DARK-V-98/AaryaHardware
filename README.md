@@ -1,4 +1,3 @@
-
 # Aarya Bathware - E-commerce Platform
 
 This is the official web platform for Aarya Bathware, featuring a product catalog, user authentication, shopping cart, and administrative dashboard.
@@ -10,35 +9,15 @@ To get started with the development environment, run:
 npm run dev
 ```
 
-## 🔌 External Chatbot API
+## 🔌 Chatbot Integration (API)
 
-We provide a secure API for third-party AI chatbots to fetch product and category data.
+We provide a secure API for third-party AI chatbots to fetch product and category data. 
 
-### Authentication
-All requests must include the following HTTP header:
-- `x-api-key`: Your secret API key.
+**API Documentation:** For full details on endpoints, authentication, and usage, please refer to [API_DOCUMENTATION.md](./API_DOCUMENTATION.md).
 
-**Default API Key:** `AB-v3n0m-XpL0r3-9k21-B4th`
-
-> ⚠️ **Security Tip:** To change this key, set the `CHATBOT_API_KEY` environment variable in your Firebase App Hosting or deployment settings.
-
-### Endpoints
-
-#### 1. List Products
-`GET /api/products`
-
-**Query Parameters:**
-- `q`: Search term (matches name or Sinhala name).
-- `category_id`: Filter by specific category ID.
-- `is_featured`: `true` or `false`.
-- `limit`: Number of results (default 50).
-- `offset`: For pagination.
-
-#### 2. Get Single Product
-`GET /api/products/[productId]`
-
-#### 3. List Categories
-`GET /api/categories`
+### Quick Auth Info
+- **Header:** `x-api-key`
+- **Key:** `AB-v3n0m-XpL0r3-9k21-B4th`
 
 ## 🛠 Tech Stack
 - **Framework:** Next.js 15 (App Router)
