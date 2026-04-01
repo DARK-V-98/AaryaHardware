@@ -9,6 +9,38 @@ To get started with the development environment, run:
 npm run dev
 ```
 
+## 📦 Deployment to GitHub
+
+To deploy this update to your GitHub repository, follow these steps:
+
+1.  **Initialize Git** (if not already done):
+    ```bash
+    git init
+    ```
+2.  **Add your files**:
+    ```bash
+    git add .
+    ```
+3.  **Commit your changes**:
+    ```bash
+    git commit -m "Update: Added Chatbot API, rebranded to Aarya Bathware, and updated contact info"
+    ```
+4.  **Connect to GitHub**:
+    Create a new repository on GitHub, then run:
+    ```bash
+    git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+    git branch -M main
+    git push -u origin main
+    ```
+
+## 🔌 Firebase App Hosting
+
+This project is configured for **Firebase App Hosting**. Once your code is on GitHub:
+1. Go to the [Firebase Console](https://console.firebase.google.com/).
+2. Navigate to **App Hosting**.
+3. Click **Get Started** and connect your GitHub repository.
+4. Firebase will automatically build and deploy your site every time you push to the `main` branch.
+
 ## 🔌 Chatbot Integration (API)
 
 We provide a secure API for third-party AI chatbots to fetch product and category data. 
