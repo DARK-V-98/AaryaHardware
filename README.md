@@ -1,3 +1,4 @@
+
 # Aarya Bathware - E-commerce Platform
 
 This is the official web platform for Aarya Bathware, featuring a product catalog, user authentication, shopping cart, and administrative dashboard.
@@ -17,7 +18,7 @@ We provide a secure API for third-party AI chatbots to fetch product and categor
 All requests must include the following HTTP header:
 - `x-api-key`: Your secret API key.
 
-**Default API Key:** `aarya-bathware-chatbot-key-2025`
+**Default API Key:** `AB-v3n0m-XpL0r3-9k21-B4th`
 
 > ⚠️ **Security Tip:** To change this key, set the `CHATBOT_API_KEY` environment variable in your Firebase App Hosting or deployment settings.
 

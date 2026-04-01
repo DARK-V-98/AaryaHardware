@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic';
  */
 export async function GET(request: NextRequest) {
   const apiKey = request.headers.get('x-api-key');
-  const validKey = process.env.CHATBOT_API_KEY || 'aarya-bathware-chatbot-key-2025';
+  const validKey = process.env.CHATBOT_API_KEY || 'AB-v3n0m-XpL0r3-9k21-B4th';
 
   if (apiKey !== validKey) {
     return NextResponse.json(
